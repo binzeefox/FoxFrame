@@ -1,0 +1,2 @@
+include ':app', ':foxtemplate'
+rootProject.name='AndroidTemplete'
