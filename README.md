@@ -18,3 +18,4 @@
 ## 依赖
 
 [![](https://jitpack.io/v/binzeefox/AndroidTemplete.svg)](https://jitpack.io/#binzeefox/AndroidTemplete)
+implementation 'com.github.binzeefox:AndroidTemplete:Tag'
