@@ -17,4 +17,4 @@
 
 ## 依赖
 
- implementation 'com.github.binzeefox:AndroidTemplete:Tag'
+[![](https://jitpack.io/v/binzeefox/AndroidTemplete.svg)](https://jitpack.io/#binzeefox/AndroidTemplete)
