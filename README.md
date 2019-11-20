@@ -19,3 +19,5 @@
 
 [![](https://jitpack.io/v/binzeefox/AndroidTemplete.svg)](https://jitpack.io/#binzeefox/AndroidTemplete)
 implementation 'com.github.binzeefox:AndroidTemplete:Tag'
+
+ok。目前并不能用，等我好好研究这个依赖该怎么搞的。
