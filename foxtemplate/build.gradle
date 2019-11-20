@@ -54,6 +54,7 @@ dependencies {
     //Butter Knife Package
     compileOnly 'com.jakewharton:butterknife:10.2.0'
     compileOnly 'com.jakewharton:butterknife-compiler:10.2.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     //Rx
     compileOnly 'io.reactivex.rxjava2:rxjava:2.1.16'
     compileOnly 'io.reactivex.rxjava2:rxandroid:2.0.2'
