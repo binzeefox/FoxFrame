@@ -231,6 +231,16 @@ public abstract class FoxActivity extends AppCompatActivity implements FoxContex
      */
     protected void onResultReturn(int requestCode, int resultCode, @Nullable Bundle params){}
 
+    /**
+     * 接口空实现，用于指定intent跳转
+     * @param intent    跳转intent
+     * @param requestCode   请求码
+     */
+    @Override
+    public void navigateForResult(Intent intent, int requestCode) {
+
+    }
+
 //    ******↓权限相关
 
     /**
