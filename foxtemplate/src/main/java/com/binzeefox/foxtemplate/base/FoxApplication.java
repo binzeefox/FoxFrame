@@ -13,7 +13,7 @@ import com.binzeefox.foxtemplate.utils.ActivityCollector;
 /**
  * 自定义Application
  * <p>
- * 集成自定义的Activity管理器，内涵模拟返回栈
+ * 集成自定义的Activity管理器，内含模拟返回栈
  * 可以批量销毁activity
  */
 public abstract class FoxApplication extends Application {

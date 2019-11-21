@@ -44,18 +44,18 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     //retrofit
-    compileOnly 'com.squareup.retrofit2:retrofit:2.6.2'
-    compileOnly 'com.squareup.retrofit2:converter-gson:2.6.2'
-    compileOnly 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
+    api 'com.squareup.retrofit2:retrofit:2.6.2'
+    api 'com.squareup.retrofit2:converter-gson:2.6.2'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
     //日志拦截器
-    compileOnly 'com.squareup.okhttp3:logging-interceptor:4.2.2'
-    compileOnly 'com.orhanobut:logger:2.2.0' // 打印日志
+    api 'com.squareup.okhttp3:logging-interceptor:4.2.2'
+    api 'com.orhanobut:logger:2.2.0' // 打印日志
 
     //Butter Knife Package
-    compileOnly 'com.jakewharton:butterknife:10.2.0'
-    compileOnly 'com.jakewharton:butterknife-compiler:10.2.0'
+    api 'com.jakewharton:butterknife:10.2.0'
+    api 'com.jakewharton:butterknife-compiler:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     //Rx
-    compileOnly 'io.reactivex.rxjava2:rxjava:2.1.16'
-    compileOnly 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    api 'io.reactivex.rxjava2:rxjava:2.1.16'
+    api 'io.reactivex.rxjava2:rxandroid:2.0.2'
 }
