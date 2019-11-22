@@ -20,8 +20,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+//import butterknife.ButterKnife;
+//import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
@@ -35,13 +35,13 @@ public abstract class FoxFragment extends Fragment implements FoxContext{
     private static final int PERMISSION_CODE = 0x99;
 
     private CompositeDisposable dContainer;   //RX回收器
-    private Unbinder unbinder;  //ButterKnife Unbinder
+//    private Unbinder unbinder;  //ButterKnife Unbinder
 
 
     @Override
     public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(inflateLayout(), container, false);
-        unbinder = ButterKnife.bind(this, view);
+//        unbinder = ButterKnife.bind(this, view);
         dContainer = new CompositeDisposable();
         // 接管onCreateView
         create(view, savedInstanceState);
@@ -147,7 +147,7 @@ public abstract class FoxFragment extends Fragment implements FoxContext{
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+//        unbinder.unbind();
     }
 
     //    ******↓权限相关

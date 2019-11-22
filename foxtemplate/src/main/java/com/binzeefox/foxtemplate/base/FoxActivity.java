@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import butterknife.ButterKnife;
+//import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
@@ -41,7 +41,7 @@ public abstract class FoxActivity extends AppCompatActivity implements FoxContex
         dContainer = new CompositeDisposable();
         setContentView(onInflateLayout());
         //ButterKnife Binder here...
-        ButterKnife.bind(this);
+//        ButterKnife.bind(this);
 
         create(savedInstanceState);
         //Check and request permission
