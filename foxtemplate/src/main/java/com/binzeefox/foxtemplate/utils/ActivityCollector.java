@@ -1,7 +1,6 @@
 package com.binzeefox.foxtemplate.utils;
 
 import android.app.Activity;
-import android.util.Log;
 import android.util.LruCache;
 
 import com.binzeefox.foxtemplate.base.FoxActivity;
@@ -11,7 +10,7 @@ import java.util.Stack;
 
 
 /**
- * 活动管理器
+ * 活动管理器，维护了一个模拟的返回栈
  */
 public class ActivityCollector {
     private static final String TAG = "ActivityCollector";
@@ -24,6 +23,9 @@ public class ActivityCollector {
     private static ActivityCollector sInstance = new ActivityCollector();
     private static final Stack<FoxActivity> sActivityStack = new Stack<>();
 
+    /**
+     * 私有化构造方法
+     */
     private ActivityCollector() {
         globalData = new LruCache<String, Object>(8) {
             @Override
@@ -57,16 +59,16 @@ public class ActivityCollector {
      */
     public void list(FoxActivity activity) {
         sActivityStack.push(activity);
-        Log.v(TAG, "registerActivity: "+ activity.getClass().getName());
+        LogUtil.v(TAG, "registerActivity: "+ activity.getClass().getName());
         logger();
     }
 
     /**
      * 移除活动
      */
-    public void delist(FoxActivity activity) {
+    public void remove(FoxActivity activity) {
         sActivityStack.remove(activity);
-        Log.v(TAG, "unRegisterActivity: " + activity.getClass().getName());
+        LogUtil.v(TAG, "unRegisterActivity: " + activity.getClass().getName());
         logger();
     }
 
@@ -78,7 +80,7 @@ public class ActivityCollector {
     }
 
     /**
-     * 杀死活动
+     * 杀死栈顶的活动
      */
     public void kill() {
         kill(1);
@@ -144,7 +146,7 @@ public class ActivityCollector {
 
     public static void logger(){
         if (!FoxApplication.DEV_MODE) return;
-        Log.v(TAG, "logger: list current activity stack\n" + printActivityStack() + "\n");
+        LogUtil.v(TAG, "logger: list current activity stack\n" + printActivityStack() + "\n");
     }
 
     /**

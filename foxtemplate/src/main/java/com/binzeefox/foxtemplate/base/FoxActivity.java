@@ -42,20 +42,12 @@ public abstract class FoxActivity extends AppCompatActivity implements FoxContex
         getFoxApplication().registerActivity(this);
         dContainer = new CompositeDisposable();
         setContentView(onInflateLayout());
-        //ButterKnife Binder here...
-//        ButterKnife.bind(this);
-
         create(savedInstanceState);
+
         //Check and request permission
         List<String> permissionList = getPermissionList(onCheckPermission());
         if (permissionList != null && !permissionList.isEmpty())
             requestSelfPermissions(checkSelfPermissions(permissionList));
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-//        setIntent(intent);    //若不走该方法，则getIntent获取到的是旧的intent值
     }
 
     @Override
@@ -147,12 +139,14 @@ public abstract class FoxActivity extends AppCompatActivity implements FoxContex
     /**
      * 加载布局
      *
-     * @return 布局资源id
+     * @return 布局资源id，将会用于{@link #setContentView(int)} 方法的参数
      */
     protected abstract int onInflateLayout();
 
     /**
      * 代理onCreate
+     *
+     * 承担了原来{@link #onCreate(Bundle)}的业务部分，隐藏了布局部分
      */
     protected abstract void create(Bundle savedInstanceState);
 
@@ -166,7 +160,7 @@ public abstract class FoxActivity extends AppCompatActivity implements FoxContex
     }
 
     /**
-     * 获取需要检查的权限
+     * 获取需要检查的权限，在Activity创建时进行检查。若需要指定时机检查，可以无视此方法
      *
      * @return 权限数组
      */

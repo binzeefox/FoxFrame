@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.binzeefox.foxtemplate.customviews.CustomDialogFragment;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,9 +17,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-//import butterknife.ButterKnife;
-//import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
@@ -35,13 +32,11 @@ public abstract class FoxFragment extends Fragment implements FoxContext{
     private static final int PERMISSION_CODE = 0x99;
 
     private CompositeDisposable dContainer;   //RX回收器
-//    private Unbinder unbinder;  //ButterKnife Unbinder
 
 
     @Override
     public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(inflateLayout(), container, false);
-//        unbinder = ButterKnife.bind(this, view);
         dContainer = new CompositeDisposable();
         // 接管onCreateView
         create(view, savedInstanceState);
@@ -147,7 +142,6 @@ public abstract class FoxFragment extends Fragment implements FoxContext{
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-//        unbinder.unbind();
     }
 
     //    ******↓权限相关
@@ -161,7 +155,8 @@ public abstract class FoxFragment extends Fragment implements FoxContext{
     protected List<String> checkSelfPermissions(List<String> permissions) {
         List<String> failedList = new ArrayList<>();
         for (String permission : permissions)
-            if (PackageManager.PERMISSION_GRANTED != getActivity().checkSelfPermission(permission))
+            if (PackageManager.PERMISSION_GRANTED
+                    != ActivityCompat.checkSelfPermission(FoxApplication.get(), permission))
                 failedList.add(permission);
         return failedList;
     }

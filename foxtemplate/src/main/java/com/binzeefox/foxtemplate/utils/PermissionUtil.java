@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.binzeefox.foxtemplate.R;
 import com.binzeefox.foxtemplate.base.FoxActivity;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import io.reactivex.ObservableOnSubscribe;
  */
 public class PermissionUtil {
     private static final String TAG = "PermissionUtil";
-    private static final int REQUEST_CODE = 0x025;
+    private static final int REQUEST_CODE = R.id.code_permission_rx;
     private static final String REQUEST_TAG = "REQUEST_PERMISSION_FRAGMENT";
     private static PermissionFragment mFragment;
     private List<String> permissionList = new ArrayList<>();

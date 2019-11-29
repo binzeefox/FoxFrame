@@ -8,7 +8,6 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 
 import com.binzeefox.foxtemplate.base.FoxActivity;
-import com.binzeefox.foxtemplate.utils.FileUtil;
 
 import java.io.File;
 
@@ -19,7 +18,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * 图片获取基类
  *
- * TODO 改用添加Fragment的方式接管onActivityResult
+ * @deprecated 改用添加Fragment的方式接管onActivityResult 的 {@link ImageFilesUtilInterface}
  * @author binze
  * 2019/10/28 13:41
  */

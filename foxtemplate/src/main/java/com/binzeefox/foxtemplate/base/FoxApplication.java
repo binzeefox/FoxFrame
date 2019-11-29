@@ -86,7 +86,7 @@ public abstract class FoxApplication extends Application {
      * 模拟返回栈注销
      */
     public void unRegisterActivity(FoxActivity activity) {
-        mCollector.delist(activity);
+        mCollector.remove(activity);
     }
 
     /**
@@ -104,7 +104,7 @@ public abstract class FoxApplication extends Application {
     }
 
     /**
-     * 存入全局缓存数据
+     * 存入全局缓存数据，暂定写死的最多8条数据，没必要在全局单例里存那么那么多数据啦。。
      *
      * @param key   键
      * @param value 值

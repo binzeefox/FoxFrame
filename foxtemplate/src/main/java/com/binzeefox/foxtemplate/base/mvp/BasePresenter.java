@@ -2,9 +2,15 @@ package com.binzeefox.foxtemplate.base.mvp;
 
 import io.reactivex.disposables.CompositeDisposable;
 
+/**
+ * MVP P层基类
+ *
+ * @param <T>   V层的泛型
+ * @author binze
+ */
 public abstract class BasePresenter<T extends IBaseView> implements IBasePresenter {
-    protected T view;
-    protected CompositeDisposable dContainer;
+    protected T view;   //V层
+    protected CompositeDisposable dContainer;   //V层提供的Rx回收器
 
     /**
      * 初始化
@@ -19,8 +25,6 @@ public abstract class BasePresenter<T extends IBaseView> implements IBasePresent
 
     /**
      * 绑定View
-     *
-     * @param view
      */
     private void onBind(T view) {
         this.view = view;

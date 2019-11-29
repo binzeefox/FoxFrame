@@ -21,6 +21,11 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * 网络业务类 利用的Retrofit
+ * @author binze
+ * 2019/11/29 15:16
+ */
 public abstract class Client {
     private static final int DEFAULT_CONNECT_TIMEOUT = 10;
     private static final int DEFAULT_READ_TIMEOUT = 20;
@@ -63,13 +68,17 @@ public abstract class Client {
 
 //    *******抽象方法↓******
 
+    /**
+     * 获取基本路径
+     * @return  项目业务的基本路径
+     */
     protected abstract String getBaseUrl();
 
 
 //    *******公共方法↓******
 
     /**
-     *  获取Api
+     *  获取业务接口Api
      */
     public <T> T getApi(Class<T> apiClass){
         return (T) mRetrofit.create(apiClass);
