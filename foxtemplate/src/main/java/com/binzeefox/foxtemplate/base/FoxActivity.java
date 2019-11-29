@@ -18,6 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 //import butterknife.ButterKnife;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
@@ -178,21 +180,21 @@ public abstract class FoxActivity extends AppCompatActivity implements FoxContex
      * @param failedList 尚未通过的权限
      */
     protected void onSelfPermissionResult(List<String> failedList) {
-        if (failedList.size() == 0)
-            return;
-        StringBuilder sb = new StringBuilder();
-        for (String permission : failedList) {
-            if (!sb.toString().isEmpty())
-                sb.append("和");
-            sb.append(permission).append("\n");
-        }
-        sb.append("获取失败");
-
-        CustomDialogFragment.get(this)
-                .cancelable(true)
-                .title("权限获取失败")
-                .message(sb.toString())
-                .show(getSupportFragmentManager());
+//        if (failedList.size() == 0)
+//            return;
+//        StringBuilder sb = new StringBuilder();
+//        for (String permission : failedList) {
+//            if (!sb.toString().isEmpty())
+//                sb.append("和");
+//            sb.append(permission).append("\n");
+//        }
+//        sb.append("获取失败");
+//
+//        CustomDialogFragment.get(this)
+//                .cancelable(true)
+//                .title("权限获取失败")
+//                .message(sb.toString())
+//                .show(getSupportFragmentManager());
     }
 
     /**
@@ -284,11 +286,16 @@ public abstract class FoxActivity extends AppCompatActivity implements FoxContex
      */
     @Override
     public final void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         List<String> failedList = new ArrayList<>();
 
         for (int i = 0; i < permissions.length; i++)
             if (PackageManager.PERMISSION_GRANTED != grantResults[i])
                 failedList.add(permissions[i]);
         onSelfPermissionResult(failedList);
+        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+        if (failedList.isEmpty()) return;
+        for (Fragment fragment : fragmentList)
+            fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

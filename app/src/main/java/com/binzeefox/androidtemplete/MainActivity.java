@@ -1,14 +1,19 @@
 package com.binzeefox.androidtemplete;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import com.binzeefox.foxtemplate.base.FoxActivity;
+
+public class MainActivity extends FoxActivity {
+    private static final String TAG = "MainActivity";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int onInflateLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void create(Bundle savedInstanceState) {
+
     }
 }
