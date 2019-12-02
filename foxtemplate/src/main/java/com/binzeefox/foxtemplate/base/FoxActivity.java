@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 
 import com.binzeefox.foxtemplate.R;
-import com.binzeefox.foxtemplate.customviews.CustomDialogFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,8 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-//import butterknife.ButterKnife;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -30,7 +28,7 @@ import io.reactivex.disposables.CompositeDisposable;
  * 封装跳转
  */
 @SuppressWarnings("SameParameterValue")
-public abstract class FoxActivity extends AppCompatActivity implements FoxContext{
+public abstract class FoxActivity extends AppCompatActivity implements FoxContext {
     private static final int PERMISSION_CODE = R.id.code_permission;    //权限请求码
     protected CompositeDisposable dContainer;   //RX回收器
 
@@ -41,7 +39,13 @@ public abstract class FoxActivity extends AppCompatActivity implements FoxContex
         super.onCreate(savedInstanceState);
         getFoxApplication().registerActivity(this);
         dContainer = new CompositeDisposable();
-        setContentView(onInflateLayout());
+
+        // @author binze
+        // update in 2019/12/2 14:58
+        if (onInflateLayout() != -1)    //若重写了资源文件方法，则添加资源文件Layout
+            setContentView(onInflateLayout());
+        else if (onSetLayout() != null) //若重写了View方法， 则添加View
+            setContentView(onSetLayout());
         create(savedInstanceState);
 
         //Check and request permission
@@ -123,7 +127,7 @@ public abstract class FoxActivity extends AppCompatActivity implements FoxContex
     /**
      * 设置返回值
      *
-     * @param bundle      返回数据
+     * @param bundle     返回数据
      * @param resultCode 返回码
      */
     protected void setResultAndReturn(Bundle bundle, int resultCode) {
@@ -140,12 +144,26 @@ public abstract class FoxActivity extends AppCompatActivity implements FoxContex
      * 加载布局
      *
      * @return 布局资源id，将会用于{@link #setContentView(int)} 方法的参数
+     * update in 2019-12-02 14:50
+     * 改为继承方法，同时添加{@link #onSetLayout()} 方法，继承时可选择直接添加View还是添加资源id
      */
-    protected abstract int onInflateLayout();
+    protected int onInflateLayout() {
+        return -1;
+    }
+
+    /**
+     * 加载布局
+     *
+     * @return 布局，将会用于{@link #setContentView(View)} 方法的参数，优先级低于{@link #onInflateLayout()}
+     * @author binze 2019/12/2 14:54
+     */
+    protected View onSetLayout() {
+        return null;
+    }
 
     /**
      * 代理onCreate
-     *
+     * <p>
      * 承担了原来{@link #onCreate(Bundle)}的业务部分，隐藏了布局部分
      */
     protected abstract void create(Bundle savedInstanceState);
@@ -210,7 +228,7 @@ public abstract class FoxActivity extends AppCompatActivity implements FoxContex
      * @param intent 来源intent
      * @author binze 2019/11/1 9:23
      */
-    protected Bundle getDataFromIntent(Intent intent){
+    protected Bundle getDataFromIntent(Intent intent) {
         Bundle bundle;
 
         if (intent == null) return new Bundle();
@@ -221,16 +239,19 @@ public abstract class FoxActivity extends AppCompatActivity implements FoxContex
 
     /**
      * 获取返回值
-     * @param requestCode   请求码
-     * @param resultCode    返回码
-     * @param params    返回值
+     *
+     * @param requestCode 请求码
+     * @param resultCode  返回码
+     * @param params      返回值
      */
-    protected void onResultReturn(int requestCode, int resultCode, @Nullable Bundle params){}
+    protected void onResultReturn(int requestCode, int resultCode, @Nullable Bundle params) {
+    }
 
     /**
      * 接口空实现，用于指定intent跳转
-     * @param intent    跳转intent
-     * @param requestCode   请求码
+     *
+     * @param intent      跳转intent
+     * @param requestCode 请求码
      */
     @Override
     public void navigateForResult(Intent intent, int requestCode) {

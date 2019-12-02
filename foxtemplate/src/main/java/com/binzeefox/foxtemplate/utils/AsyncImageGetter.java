@@ -20,7 +20,9 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.internal.disposables.DisposableContainer;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -37,6 +39,7 @@ public abstract class AsyncImageGetter implements ImageFilesUtilInterface {
     private static final FoxApplication mApp = FoxApplication.get();    //Application实例
     private Observable<Result> mObservable; //图片被观察者
     private ObservableEmitter<Result> mEmitter; //上面那个被观察者的事件发射器
+    private CompositeDisposable dContainer = new CompositeDisposable();
 
 
     /**
@@ -208,7 +211,16 @@ public abstract class AsyncImageGetter implements ImageFilesUtilInterface {
         intent.putExtra("noFaceDetection", true);   //取消面部识别
         return intent;
     }
-    
+
+    /**
+     * 回收方法
+     * @author binze 2019/12/2 15:10
+     */
+    public void close(){
+        if (!dContainer.isDisposed())
+            dContainer.dispose();
+    }
+
     /**
      * 处理ActivityResult的回调
      * @author binze 2019/11/29 17:45
@@ -220,6 +232,7 @@ public abstract class AsyncImageGetter implements ImageFilesUtilInterface {
             @Override
             public void onSubscribe(Disposable d) {
                 disposable = d;
+                dContainer.add(d);
             }
 
             @Override
@@ -238,7 +251,7 @@ public abstract class AsyncImageGetter implements ImageFilesUtilInterface {
 
             @Override
             public void onComplete() {
-                disposable.dispose();
+//                disposable.dispose();
             }
         };
     }

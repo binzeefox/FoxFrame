@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentManager;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.internal.disposables.DisposableContainer;
 
 /**
  * 用类似RxAndroid的方式接管{@link Activity#startActivityForResult(Intent, int)}

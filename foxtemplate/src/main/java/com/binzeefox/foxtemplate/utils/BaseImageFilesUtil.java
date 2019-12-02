@@ -18,7 +18,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * 图片获取基类
  *
- * @deprecated 改用添加Fragment的方式接管onActivityResult 的 {@link ImageFilesUtilInterface}
+ * @deprecated 改用添加Fragment的方式接管onActivityResult 的 {@link AsyncImageGetter}
  * @author binze
  * 2019/10/28 13:41
  */
