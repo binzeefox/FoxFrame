@@ -2,6 +2,8 @@ package com.binzeefox.foxtemplate.utils;
 
 import java.util.regex.Pattern;
 
+import androidx.annotation.StringRes;
+
 public class StringChecker {
 
     /**
@@ -10,6 +12,19 @@ public class StringChecker {
     public static boolean isInteger(String str) {
         Pattern pattern = Pattern.compile("^[-+]?[\\d]*$");
         return pattern.matcher(str).matches();
+    }
+
+    /**
+     * 判断是否是双精度浮点数
+     * @author binze 2019/12/3 15:30
+     */
+    public static boolean isDouble(String str){
+        try{
+            Double.parseDouble(str);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
     /**

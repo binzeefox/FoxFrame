@@ -5,9 +5,15 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.binzeefox.foxtemplate.R;
+import com.binzeefox.foxtemplate.base.interfaces.FoxContext;
+import com.binzeefox.foxtemplate.base.interfaces.ViewHelper;
+import com.binzeefox.foxtemplate.utils.StringChecker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +35,7 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 @SuppressWarnings("SameParameterValue")
 public abstract class FoxActivity extends AppCompatActivity implements FoxContext {
+    private static final String TAG = "FoxActivity";
     private static final int PERMISSION_CODE = R.id.code_permission;    //权限请求码
     protected CompositeDisposable dContainer;   //RX回收器
 
@@ -136,7 +143,6 @@ public abstract class FoxActivity extends AppCompatActivity implements FoxContex
         setResult(resultCode, intent);
         finish();
     }
-
 
 //    ******↓继承方法
 
@@ -312,5 +318,139 @@ public abstract class FoxActivity extends AppCompatActivity implements FoxContex
         if (failedList.isEmpty()) return;
         for (Fragment fragment : fragmentList)
             fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+//    特殊方法 ↓
+
+    /**
+     * 获取视图帮助类，用于快捷的对视图进行操作
+     * @author binze 2019/12/3 15:14
+     */
+    protected ViewHelper getViewHelper(){
+        return new ViewHelper() {
+            @Override
+            public String getStringById(int id) {
+                View view = findViewById(id);
+                if (!(view instanceof TextView)) return null;
+                return ((TextView) view).getText().toString();
+            }
+
+            @Override
+            public double getDoubleById(int id) {
+                View view = findViewById(id);
+                if (!(view instanceof TextView))
+                    throw new IllegalArgumentException("参数应为TextView或其子类!!");
+                String str = ((TextView) view).getText().toString();
+                try {
+                    return Double.parseDouble(str);
+                }catch (Exception e){
+                    throw new IllegalStateException("TextView的值非纯数字", e);
+                }
+            }
+
+            @Override
+            public int getIntegerById(int id) {
+                View view = findViewById(id);
+                if (!(view instanceof TextView))
+                    throw new IllegalArgumentException("参数应为TextView或其子类!!");
+                String str = ((TextView) view).getText().toString();
+                try {
+                    return Integer.parseInt(str);
+                }catch (Exception e){
+                    throw new IllegalStateException("TextView的值非纯数字", e);
+                }
+            }
+
+            @Override
+            public void setErrorById(int id, CharSequence error) {
+                View view = findViewById(id);
+                if (!(view instanceof EditText)){
+                    Log.w(TAG, "setErrorById: 目标View非EditText子类");
+                    return;
+                }
+                ((EditText) view).setError(error);
+            }
+
+            @Override
+            public void setErrorById(int id, int strId) {
+                View view = findViewById(id);
+                if (!(view instanceof EditText)){
+                    Log.w(TAG, "setErrorById: 目标View非EditText子类");
+                    return;
+                }
+                ((EditText) view).setError(getString(strId));
+            }
+
+            @Override
+            public void setTextById(int id, CharSequence text) {
+                View view = findViewById(id);
+                if (!(view instanceof TextView)){
+                    Log.w(TAG, "setErrorById: 目标View非TextView子类");
+                    return;
+                }
+                ((EditText) view).setText(text);
+            }
+
+            @Override
+            public void setTextById(int id, int strId) {
+                View view = findViewById(id);
+                if (!(view instanceof EditText)){
+                    Log.w(TAG, "setErrorById: 目标View非TextView子类");
+                    return;
+                }
+                ((EditText) view).setText(strId);
+            }
+
+            @Override
+            public void clearViewById(int id) {
+                View view = findViewById(id);
+                if (!(view instanceof EditText)){
+                    Log.w(TAG, "setErrorById: 目标View非TextView子类");
+                    return;
+                }
+                ((EditText) view).setError(null);
+                ((EditText) view).setText(null);
+            }
+
+            @Override
+            public boolean checkVisibility(View view) {
+                return view.getVisibility() == View.VISIBLE;
+            }
+
+            @Override
+            public boolean checkVisibilityById(int id) {
+                return findViewById(id).getVisibility() == View.VISIBLE;
+            }
+
+            @Override
+            public boolean checkEnable(View view) {
+                return view.isEnabled();
+            }
+
+            @Override
+            public boolean checkEnableById(int id) {
+                return findViewById(id).isEnabled();
+            }
+
+            @Override
+            public void setViewsVisibility(int visibility, View... views) {
+                for (View view : views) view.setVisibility(visibility);
+            }
+
+            @Override
+            public void setViewsVisibilityByIds(int visibility, int... ids) {
+                for (int id : ids) findViewById(id).setVisibility(visibility);
+            }
+
+            @Override
+            public void setViewsEnable(boolean enable, View... views) {
+                for (View view : views) view.setEnabled(enable);
+            }
+
+            @Override
+            public void setViewsEnableById(boolean enable, int... ids) {
+                for (int id : ids) findViewById(id).setEnabled(enable);
+            }
+        };
     }
 }

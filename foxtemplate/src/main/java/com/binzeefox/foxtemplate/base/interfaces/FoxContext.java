@@ -1,8 +1,11 @@
-package com.binzeefox.foxtemplate.base;
+package com.binzeefox.foxtemplate.base.interfaces;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.binzeefox.foxtemplate.base.FoxActivity;
+import com.binzeefox.foxtemplate.base.FoxFragment;
 
 /**
  * 自制的Context
