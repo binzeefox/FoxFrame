@@ -18,6 +18,7 @@ import androidx.annotation.StringRes;
  * {@link #clearViewById(int)}  清除TextView的文字和状态
  * {@link #checkVisibility(View)}   检查View可见性, 若非Visible则返回false，否则返回true
  * {@link #checkVisibilityById(int)}    检查View可见性, 若非Visible则返回false，否则返回true
+ * {@link #checkFieldEmptyById(int)}    检查填写项是否为空
  * {@link #checkEnable(View)}   检查View是否启用
  * {@link #checkEnableById(int)}    检查View是否启用
  * {@link #setViewsVisibility(int, View...)}    批量设置View可见性
@@ -43,6 +44,7 @@ public interface ViewHelper {
     //State
     boolean checkVisibility(View view);
     boolean checkVisibilityById(@IdRes int id);
+    boolean checkFieldEmptyById(@IdRes int id);
 
     boolean checkEnable(View view);
     boolean checkEnableById(@IdRes int id);
@@ -52,4 +54,5 @@ public interface ViewHelper {
 
     void setViewsEnable(boolean enable, View... views);
     void setViewsEnableById(boolean enable, @IdRes int... ids);
+
 }

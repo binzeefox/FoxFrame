@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -273,7 +274,7 @@ public abstract class FoxFragment extends Fragment implements FoxContext {
                     Log.w(TAG, "setErrorById: 目标View非TextView子类");
                     return;
                 }
-                ((EditText) view).setText(text);
+                ((TextView) view).setText(text);
             }
 
             @Override
@@ -289,12 +290,12 @@ public abstract class FoxFragment extends Fragment implements FoxContext {
             @Override
             public void clearViewById(int id) {
                 View view = root.findViewById(id);
-                if (!(view instanceof EditText)){
+                if (!(view instanceof TextView)){
                     Log.w(TAG, "setErrorById: 目标View非TextView子类");
                     return;
                 }
-                ((EditText) view).setError(null);
-                ((EditText) view).setText(null);
+                ((TextView) view).setError(null);
+                ((TextView) view).setText(null);
             }
 
             @Override
@@ -305,6 +306,16 @@ public abstract class FoxFragment extends Fragment implements FoxContext {
             @Override
             public boolean checkVisibilityById(int id) {
                 return root.findViewById(id).getVisibility() == View.VISIBLE;
+            }
+
+            @Override
+            public boolean checkFieldEmptyById(int id) {
+                View view = root.findViewById(id);
+                if (!(view instanceof TextView)){
+                    Log.w(TAG, "setErrorById: 目标View非TextView子类");
+                    return true;
+                }
+                return TextUtils.isEmpty(((TextView) view).getText());
             }
 
             @Override
