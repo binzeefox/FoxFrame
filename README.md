@@ -17,8 +17,11 @@
 
 ## 依赖
 
-[![](https://jitpack.io/v/binzeefox/AndroidTemplete.svg)](https://jitpack.io/#binzeefox/AndroidTemplete)\
+[![](https://jitpack.io/v/binzeefox/AndroidTemplete.svg)](https://jitpack.io/#binzeefox/AndroidTemplete)
+
 implementation 'com.github.binzeefox:AndroidTemplete:Tag'
+
+记得在Project.Gradle 里的 allprojects. repositories里添加 maven { url "https://jitpack.io" }
 
 ~~ok。目前并不能用，等我好好研究这个依赖该怎么搞的。~~
 
