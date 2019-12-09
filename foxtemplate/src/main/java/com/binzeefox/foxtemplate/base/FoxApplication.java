@@ -7,7 +7,6 @@ import android.os.Build;
 
 import com.binzeefox.foxtemplate.utils.ActivityCollector;
 
-//import org.litepal.LitePal;
 
 
 /**
