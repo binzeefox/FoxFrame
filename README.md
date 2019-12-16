@@ -21,7 +21,7 @@
 
 implementation 'com.github.binzeefox:AndroidTemplete:Tag'
 
-记得在Project.Gradle 里的 allprojects. repositories里添加 maven { url "https://jitpack.io" }
+记得在Project.Gradle 里的 ```allprojects.repositories```里添加 ```maven { url "https://jitpack.io" }```
 
 
 ## 使用
