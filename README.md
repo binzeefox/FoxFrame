@@ -23,6 +23,8 @@ implementation 'com.github.binzeefox:AndroidTemplete:Tag'
 
 记得在Project.Gradle 里的 allprojects. repositories里添加 maven { url "https://jitpack.io" }
 
-~~ok。目前并不能用，等我好好研究这个依赖该怎么搞的。~~
 
-## 终于能用了！！！（大声BB）
+## 使用
+
+继承并实现FoxApplication并设置为项目application，或者调用```FoxCore.init(Application)```进行初始化。
+即使不初始化，也能使用部分功能，而初始化后框架内所有方法都不需要提供Context
