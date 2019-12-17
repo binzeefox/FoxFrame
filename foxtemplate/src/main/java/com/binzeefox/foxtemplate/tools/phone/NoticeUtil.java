@@ -1,8 +1,11 @@
 package com.binzeefox.foxtemplate.tools.phone;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -13,6 +16,10 @@ import com.binzeefox.foxtemplate.core.FoxCore;
 import com.binzeefox.foxtemplate.views.CustomDialogFragment;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresPermission;
+
+import static android.content.Context.VIBRATOR_SERVICE;
+import static android.os.VibrationEffect.DEFAULT_AMPLITUDE;
 
 
 /**
@@ -149,6 +156,65 @@ public class NoticeUtil {
         if (dialogHelper.getFragmentManager() != null)
             dialogHelper.dismiss();
         dialogHelper = null;
+    }
+
+    /**
+     * 震动功能
+     * @author binze 2019/12/17 10:37
+     */
+    @RequiresPermission(allOf = Manifest.permission.VIBRATE)
+    public Vibrator vibrate(){
+        return new Vibrator();
+    }
+
+    /**
+     * 震动功能类
+     * @author binze 2019/12/17 10:41
+     */
+    public class Vibrator{
+        private android.os.Vibrator vibrator = (android.os.Vibrator) mCtx.getSystemService(VIBRATOR_SERVICE);
+        private int amplitude = DEFAULT_AMPLITUDE;  //振幅
+
+        private Vibrator(){}
+
+        /**
+         * 设置震动
+         * @author binze 2019/12/17 10:49
+         */
+        public Vibrator setAmplitude(int amplitude){
+            this.amplitude = amplitude;
+            return this;
+        }
+
+        /**
+         * 一次性震动
+         * @author binze 2019/12/17 10:48
+         */
+        @RequiresPermission(allOf = Manifest.permission.VIBRATE)
+        public void vibrate(long period){
+            VibrationEffect effect = VibrationEffect.createOneShot(period, amplitude);
+            vibrator.vibrate(effect);
+        }
+
+        /**
+         * 波形震动
+         * @author binze 2019/12/17 10:49
+         */
+        @RequiresPermission(allOf = Manifest.permission.VIBRATE)
+        public void vibrate(long[] timings, int[] amplitudes, int repeat){
+            VibrationEffect effect = VibrationEffect.createWaveform(timings, amplitudes, repeat);
+            vibrator.vibrate(effect);
+        }
+
+        /**
+         * 波形震动
+         * @author binze 2019/12/17 10:49
+         */
+        @RequiresPermission(allOf = Manifest.permission.VIBRATE)
+        public void vibrate(long[] timings, int repeat){
+            VibrationEffect effect = VibrationEffect.createWaveform(timings, repeat);
+            vibrator.vibrate(effect);
+        }
     }
 
     /**

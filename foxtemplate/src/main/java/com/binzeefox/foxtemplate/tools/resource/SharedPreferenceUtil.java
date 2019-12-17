@@ -91,7 +91,7 @@ public class SharedPreferenceUtil {
      * @param key   键
      * @return  信息
      */
-    public synchronized String readServerConfig(String key){
+    public synchronized String readConfig(String key){
         return readString(FILENAME_CONFIG, key, "");
     }
 
@@ -100,7 +100,7 @@ public class SharedPreferenceUtil {
      * @param key   键
      * @param value  信息
      */
-    public synchronized void writeServerConfig(String key, String value){
+    public synchronized void writeConfig(String key, String value){
         writeString(FILENAME_CONFIG, key, value);
     }
 
@@ -109,7 +109,7 @@ public class SharedPreferenceUtil {
      * @author binze 2019/11/19 9:40
      */
     public void saveLastLoginUser(String username){
-        writeServerConfig(CONFIG_LAST_USER, username);
+        writeConfig(CONFIG_LAST_USER, username);
     }
 
     /**
@@ -119,6 +119,6 @@ public class SharedPreferenceUtil {
      * @author binze 2019/11/19 9:41
      */
     public String getLastLoginUser(){
-        return readServerConfig(CONFIG_LAST_USER);
+        return readConfig(CONFIG_LAST_USER);
     }
 }
