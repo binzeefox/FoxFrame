@@ -126,6 +126,7 @@ public class NoticeUtil {
      * 显示简单的警告信息
      *
      * @author binze 2019/10/21 15:08
+     * update 2019/12/17 取消自动show()
      */
     public CustomDialogFragment showSimpleAlertDialog(String title, String message, boolean cancelable
             , AlertDialog.OnClickListener positiveListener
@@ -137,12 +138,6 @@ public class NoticeUtil {
             dialogHelper.positiveButton("确定", positiveListener);
         }
         dialogHelper.negativeButton("取消", navigateListener);
-        if (core != null)
-            dialogHelper.show(core.getTopActivity().getSupportFragmentManager());
-        else {
-            Log.e(TAG, "getHelper: call FoxCore#init(Application) first!!!", new IllegalAccessException());
-            return null;
-        }
 
         return dialogHelper;
     }
