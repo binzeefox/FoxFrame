@@ -28,7 +28,8 @@ import io.reactivex.ObservableOnSubscribe;
  */
 public class PermissionUtil {
     private static final String TAG = "PermissionUtil";
-    private static final int REQUEST_CODE = R.id.code_permission_rx;
+//    private static final int REQUEST_CODE = R.id.code_permission_rx;
+    private static final int REQUEST_CODE = 0xff01;
     private static final String REQUEST_TAG = "REQUEST_PERMISSION_FRAGMENT";
     private static PermissionFragment mFragment;
     private List<String> permissionList = new ArrayList<>();

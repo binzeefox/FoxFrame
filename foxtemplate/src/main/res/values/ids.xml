@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="code_permission" type="id" /><!--  权限请求码  -->
-    <item name="code_permission_rx" type="id" /><!--  PermissionUtil的权限请求码  -->
-    <item name="code_activity_request" type="id" /><!--  返回参数跳转请求码  -->
+<!--    <item name="code_permission" type="id" />&lt;!&ndash;  权限请求码  &ndash;&gt;-->
+<!--    <item name="code_permission_rx" type="id" />&lt;!&ndash;  PermissionUtil的权限请求码  &ndash;&gt;-->
+<!--    <item name="code_activity_request" type="id" />&lt;!&ndash;  返回参数跳转请求码  &ndash;&gt;-->
 
-    <item name="request_camera" type="id"/><!--  请求系统相机  -->
-    <item name="request_album" type="id"/><!--  请求系统相册  -->
-    <item name="request_crop" type="id"/><!--  请求系统剪裁  -->
+<!--    <item name="request_camera" type="id"/>&lt;!&ndash;  请求系统相机  &ndash;&gt;-->
+<!--    <item name="request_album" type="id"/>&lt;!&ndash;  请求系统相册  &ndash;&gt;-->
+<!--    <item name="request_crop" type="id"/>&lt;!&ndash;  请求系统剪裁  &ndash;&gt;-->
 </resources>

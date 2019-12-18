@@ -22,7 +22,8 @@ import io.reactivex.ObservableOnSubscribe;
  */
 public class ActivityRequestUtil {
     private static final String TAG = "ActivityRequestUtil";
-    private static final int REQUEST_CODE = R.id.code_activity_request;
+//    private static final int REQUEST_CODE = R.id.code_activity_request;
+    private static final int REQUEST_CODE = 0xff00;
     private static final String REQUEST_TAG = "REQUEST_RESULT_FRAGMENT";
     private static RequestFragment mFragment;   //业务承载者
     private Intent mIntent; //请求Intent
