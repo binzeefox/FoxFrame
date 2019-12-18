@@ -139,25 +139,14 @@ public abstract class FoxActivity extends AppCompatActivity {
     }
 
     /**
-     * 实现二次点击功能
+     * 判断该方法是否在超时前被调用两次
      *
-     * Sample: 在自己的Activity内重写以下方法
-     * <code>
-     *     public void onBackPressed() {
-     *         performOnTwiceBackPressed(2);   //延迟两秒的二次点击返回
-     *     }
-     *
-     *     protected void onTwiceBackPressed() {
-     *         //your code here
-     *     }
-     * </code>
      * @param timeout   超时时间(s)
-     * @return 是否出发二次点击
+     * @return 若调在超时前调用该方法两次，则返回true
      */
-    protected boolean performOnTwiceBackPressed(int timeout){
+    protected boolean checkCallAgain(int timeout){
         if (mBackTimer != null && !mBackTimer.isDisposed() && mBackPressed){
             //在倒计时并且已经点过
-            onTwiceBackPressed();
             return true;
         }
 
@@ -174,14 +163,6 @@ public abstract class FoxActivity extends AppCompatActivity {
             }
         });
         return false;
-    }
-
-    /**
-     * 返回键双击回调
-     * @author binze 2019/12/18 9:41
-     */
-    protected void onTwiceBackPressed() {
-
     }
 
     /**
