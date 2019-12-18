@@ -18,8 +18,9 @@ public class TextTools {
     /**
      * 判断是否是奇数
      * @author binze 2019/12/13 16:34
+     * update 2019/12-18 参数类别改为long以支持长数字
      */
-    public static boolean isObb(int num){
+    public static boolean isObb(long num){
         return num % 2 == 1;
     }
 
@@ -29,7 +30,7 @@ public class TextTools {
      */
     public static boolean isObb(String numStr){
         if (!isInteger(numStr)) return false;
-        return Integer.parseInt(numStr) % 2 == 1;
+        return Long.parseLong(numStr) % 2 == 1;
     }
 
     /**

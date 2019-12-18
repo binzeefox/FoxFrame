@@ -12,8 +12,10 @@ import com.binzeefox.foxtemplate.core.tools.ActivityRequestUtil;
 import com.binzeefox.foxtemplate.core.tools.Navigator;
 import com.binzeefox.foxtemplate.core.tools.PermissionUtil;
 import com.binzeefox.foxtemplate.core.tools.ViewHelper;
+import com.binzeefox.foxtemplate.tools.RxUtil;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +23,7 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Activity基类
@@ -34,6 +37,9 @@ public abstract class FoxActivity extends AppCompatActivity {
     protected CompositeDisposable dContainer;   //RX回收器
 
     private FoxCore core = FoxCore.get();   //获取核心
+
+    private boolean mBackPressed = false;    //是否已经按过一次返回键
+    private Disposable mBackTimer = null;
 
     /**
      * 通过资源ID加载布局，优先级较低
@@ -130,6 +136,52 @@ public abstract class FoxActivity extends AppCompatActivity {
                 return findViewById(id);
             }
         };
+    }
+
+    /**
+     * 实现二次点击功能
+     *
+     * Sample: 在自己的Activity内重写以下方法
+     * <code>
+     *     public void onBackPressed() {
+     *         performOnTwiceBackPressed(2);   //延迟两秒的二次点击返回
+     *     }
+     *
+     *     protected void onTwiceBackPressed() {
+     *         //your code here
+     *     }
+     * </code>
+     * @param timeout   超时时间(s)
+     * @return 是否出发二次点击
+     */
+    protected boolean performOnTwiceBackPressed(int timeout){
+        if (mBackTimer != null && !mBackTimer.isDisposed() && mBackPressed){
+            //在倒计时并且已经点过
+            onTwiceBackPressed();
+            return true;
+        }
+
+        if (mBackTimer != null) mBackTimer.dispose();
+        mBackPressed = true;    //点击标志位true
+
+        Observable<Long> ob = Observable.timer(timeout, TimeUnit.SECONDS)
+                .compose(RxUtil.<Long>setThreadIO());
+
+        mBackTimer = ob.subscribe(new Consumer<Long>() {
+            @Override
+            public void accept(Long aLong) throws Exception {
+                mBackPressed = false;
+            }
+        });
+        return false;
+    }
+
+    /**
+     * 返回键双击回调
+     * @author binze 2019/12/18 9:41
+     */
+    protected void onTwiceBackPressed() {
+
     }
 
     /**
