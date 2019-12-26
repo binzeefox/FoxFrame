@@ -2,12 +2,16 @@ package com.binzeefox.foxtemplate.tools.phone;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.provider.Settings;
 
 import com.binzeefox.foxtemplate.core.FoxCore;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -84,8 +88,30 @@ public class IntentUtil {
      *
      * @author binze 2019/12/26 15:59
      */
-    public SendHelper shareTo(Intent info, String title) {
+    public SendHelper shareTo() {
         return new SendHelper();
+    }
+
+    /**
+     * 分享图片
+     * @author binze 2019/12/26 16:18
+     */
+    public void shareImageTo(Uri uri, String title){
+        Intent info = new Intent(Intent.ACTION_SEND);
+        info.putExtra(Intent.EXTRA_STREAM, uri);
+        info.setType("image/*");
+        mCtx.startActivity(Intent.createChooser(info, title));
+    }
+
+    /**
+     * 分享多图片
+     * @author binze 2019/12/26 16:18
+     */
+    public void shareImageTo(ArrayList<Uri> imageUriList, String title){
+        Intent info = new Intent(Intent.ACTION_SEND_MULTIPLE);
+        info.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUriList);
+        info.setType("image/*");
+        mCtx.startActivity(Intent.createChooser(info, title));
     }
 
     /**
