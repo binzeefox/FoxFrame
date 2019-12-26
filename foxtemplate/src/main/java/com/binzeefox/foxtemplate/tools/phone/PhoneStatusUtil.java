@@ -121,40 +121,4 @@ public class PhoneStatusUtil {
         manager.getMemoryInfo(info);
         return info.availMem / 1024;
     }
-
-    /**
-     * 网络设置弹窗
-     * @author binze 2019/12/24 12:05
-     */
-    @RequiresApi(api = Build.VERSION_CODES.Q)
-    public void showInternetSetting(){
-        mCtx.startActivity(new Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY));
-    }
-
-    /**
-     * NFC设置弹窗
-     * @author binze 2019/12/24 12:05
-     */
-    @RequiresApi(api = Build.VERSION_CODES.Q)
-    public void showNFCSetting(){
-        mCtx.startActivity(new Intent(Settings.Panel.ACTION_NFC));
-    }
-
-    /**
-     * 音量设置弹窗
-     * @author binze 2019/12/24 12:05
-     */
-    @RequiresApi(api = Build.VERSION_CODES.Q)
-    public void showVolumeSetting(){
-        mCtx.startActivity(new Intent(Settings.Panel.ACTION_VOLUME));
-    }
-
-    /**
-     * WIFI设置弹窗
-     * @author binze 2019/12/24 12:05
-     */
-    @RequiresApi(api = Build.VERSION_CODES.Q)
-    public void showWifiSetting(){
-        mCtx.startActivity(new Intent(Settings.Panel.ACTION_WIFI));
-    }
 }
