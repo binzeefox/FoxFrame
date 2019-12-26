@@ -118,6 +118,10 @@ public class IntentUtil {
                 info.putExtra(name, (Parcelable) value);
             if (value instanceof Parcelable[])
                 info.putExtra(name, (Parcelable[]) value);
+            if (value instanceof String)
+                info.putExtra(name, (String) value);
+            if (value instanceof String[])
+                info.putExtra(name, (String[]) value);
             return this;
         }
 
