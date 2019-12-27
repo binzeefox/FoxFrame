@@ -9,6 +9,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.provider.Settings;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.binzeefox.foxtemplate.core.FoxCore;
 
@@ -26,17 +28,19 @@ public class PhoneStatusUtil {
 
     /**
      * 静态获取
+     *
      * @author binze 2019/12/11 14:16
      */
-    public static PhoneStatusUtil get(){
+    public static PhoneStatusUtil get() {
         return new PhoneStatusUtil(null);
     }
 
     /**
      * 初始化
+     *
      * @author binze 2019/12/11 14:16
      */
-    public PhoneStatusUtil(@Nullable Context context){
+    public PhoneStatusUtil(@Nullable Context context) {
         if (context != null) mCtx = context.getApplicationContext();
     }
 
@@ -120,5 +124,18 @@ public class PhoneStatusUtil {
         if (manager == null) return -1;
         manager.getMemoryInfo(info);
         return info.availMem / 1024;
+    }
+
+    /**
+     * 显示软键盘
+     *
+     * @author binze 2019/12/26 16:27
+     */
+    public void showSoftKeyborad(View view) {
+        if (view.requestFocus()) {
+            InputMethodManager imm = (InputMethodManager)
+                    mCtx.getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        }
     }
 }

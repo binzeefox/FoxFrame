@@ -21,6 +21,9 @@ import androidx.annotation.Nullable;
 
 /**
  * 位图工具类
+ *
+ * 2019-12-27 弃用，转为使用android P {@link android.graphics.ImageDecoder} 的 {@link ImageUtil}
+ * @deprecated use {@link ImageUtil} instead
  */
 public class BitmapUtil {
     private static final String TAG = "BitmapUtil";
