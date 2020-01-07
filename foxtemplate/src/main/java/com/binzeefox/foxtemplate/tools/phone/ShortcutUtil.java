@@ -40,6 +40,15 @@ public class ShortcutUtil {
     }
 
     /**
+     * 构造器
+     *
+     * @author binze 2019/11/22 12:02
+     */
+    public ShortcutUtil(Context context) {
+        mManager = context.getSystemService(ShortcutManager.class);
+    }
+
+    /**
      * 静态生成捷径Intent
      *
      * @param mCtx     发起源活动
@@ -52,15 +61,6 @@ public class ShortcutUtil {
         intent.putExtra(PARAMS_EXTRA, bundle);
         intent.setAction(Intent.ACTION_VIEW);
         return intent;
-    }
-
-    /**
-     * 构造器
-     *
-     * @author binze 2019/11/22 12:02
-     */
-    public ShortcutUtil(Context context) {
-        mManager = context.getSystemService(ShortcutManager.class);
     }
 
     /**

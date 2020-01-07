@@ -16,6 +16,7 @@ import com.binzeefox.foxtemplate.core.FoxCore;
 
 import java.security.PublicKey;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.RequiresPermission;
@@ -24,7 +25,7 @@ import androidx.annotation.RequiresPermission;
  * 用于获取手机各种状态的工具类
  */
 public class PhoneStatusUtil {
-    private Context mCtx = FoxCore.getApplication();
+    private Context mCtx;
 
     /**
      * 静态获取
@@ -32,7 +33,7 @@ public class PhoneStatusUtil {
      * @author binze 2019/12/11 14:16
      */
     public static PhoneStatusUtil get() {
-        return new PhoneStatusUtil(null);
+        return new PhoneStatusUtil(FoxCore.getApplication());
     }
 
     /**
@@ -40,8 +41,8 @@ public class PhoneStatusUtil {
      *
      * @author binze 2019/12/11 14:16
      */
-    public PhoneStatusUtil(@Nullable Context context) {
-        if (context != null) mCtx = context.getApplicationContext();
+    public PhoneStatusUtil(@NonNull Context context) {
+        mCtx = context.getApplicationContext();
     }
 
     /**

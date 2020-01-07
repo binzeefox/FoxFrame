@@ -8,7 +8,7 @@ public class BaseApplication extends FoxApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        // or call this method in your Application instead
+        // or call this method below in your own Application instead
         // FoxCore.init(this);
     }
 }

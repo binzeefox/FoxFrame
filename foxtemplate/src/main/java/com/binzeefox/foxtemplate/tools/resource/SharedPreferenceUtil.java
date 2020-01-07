@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 
 import com.binzeefox.foxtemplate.core.FoxCore;
 
+import androidx.annotation.NonNull;
+
 
 /**
  * SharedPreference工具
@@ -32,7 +34,7 @@ public class SharedPreferenceUtil {
         return sInstance;
     }
 
-    public static SharedPreferenceUtil get(Context context){
+    public static SharedPreferenceUtil get(@NonNull Context context){
         if (sInstance == null) {
             synchronized (SharedPreferenceUtil.class) {
                 if (sInstance == null) {
@@ -46,7 +48,7 @@ public class SharedPreferenceUtil {
     /**
      * 私有化构建
      */
-    private SharedPreferenceUtil(Context context){
+    protected SharedPreferenceUtil(Context context){
         mContext = context.getApplicationContext();
     }
 

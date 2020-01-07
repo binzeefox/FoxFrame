@@ -5,6 +5,7 @@ import android.content.res.Resources;
 
 import com.binzeefox.foxtemplate.core.FoxCore;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
@@ -14,7 +15,6 @@ import androidx.annotation.Nullable;
  * 2019/11/19 9:26
  */
 public class DimenUtil {
-    private Context mCtx = FoxCore.getApplication();
     private final float scale;
 
     /**
@@ -22,16 +22,15 @@ public class DimenUtil {
      * @author binze 2019/12/11 14:05
      */
     public static DimenUtil get(){
-        return new DimenUtil(null);
+        return new DimenUtil(FoxCore.getApplication());
     }
 
     /**
      * 构造器
      * @author binze 2019/12/11 14:04
      */
-    public DimenUtil(@Nullable Context context){
-        if (context != null) mCtx = context.getApplicationContext();
-        scale = mCtx.getResources().getDisplayMetrics().density;
+    public DimenUtil(@NonNull Context context){
+        scale = context.getResources().getDisplayMetrics().density;
     }
 
     /**

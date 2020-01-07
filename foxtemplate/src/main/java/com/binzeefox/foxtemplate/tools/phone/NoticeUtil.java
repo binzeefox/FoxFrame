@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.binzeefox.foxtemplate.core.FoxCore;
 import com.binzeefox.foxtemplate.views.CustomDialogFragment;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 
@@ -33,7 +34,7 @@ public class NoticeUtil {
     private static final String TAG = "NoticeUtil";
     private static NoticeUtil mInstance;    //单例
     private CustomDialogFragment dialogHelper;  //弹窗助手
-    private Context mCtx = FoxCore.getApplication();    //Application 实例
+    private Context mCtx;    //Application 实例
     private Toast mToast;   //Toast实例
     private FoxCore core = FoxCore.get();
 
@@ -42,7 +43,7 @@ public class NoticeUtil {
      */
     public static NoticeUtil get() {
         if (mInstance != null) return mInstance;
-        mInstance = new NoticeUtil(null);
+        mInstance = new NoticeUtil(FoxCore.getApplication());
         return mInstance;
     }
 
@@ -51,9 +52,9 @@ public class NoticeUtil {
      *
      * @param ctx ctx
      */
-    private NoticeUtil(@Nullable Context ctx) {
+    private NoticeUtil(@NonNull Context ctx) {
         //获取全局ApplicationContext防止内存泄漏
-        if (ctx != null) mCtx = ctx.getApplicationContext();
+        mCtx = ctx.getApplicationContext();
     }
 
 
@@ -173,7 +174,7 @@ public class NoticeUtil {
         private Vibrator(){}
 
         /**
-         * 设置震动
+         * 设置振幅
          * @author binze 2019/12/17 10:49
          */
         public Vibrator setAmplitude(int amplitude){
