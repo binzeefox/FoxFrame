@@ -1,9 +1,22 @@
 package com.binzeefox.foxtemplate.core.tools;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.binzeefox.foxtemplate.tools.RxUtil;
+import com.binzeefox.foxtemplate.tools.dev.ThreadUtil;
+
+import java.util.List;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 
 import static android.content.ContentValues.TAG;
 
@@ -164,5 +177,50 @@ public abstract class ViewHelper {
      */
     public void setViewsEnableById(boolean enable, int... ids) {
         for (int id : ids) findView(id).setEnabled(enable);
+    }
+
+    /**
+     * 同步加载视图
+     * @author binze 2020/4/24 10:01
+     */
+    public Observable<View> loadViewAsync(@IdRes final int id){
+        return Observable.create(new ObservableOnSubscribe<View>() {
+            @Override
+            public void subscribe(ObservableEmitter<View> e) throws Exception {
+                View view = findView(id);
+                e.onNext(view);
+                e.onComplete();
+            }
+        }).compose(RxUtil.<View>setThreadIO());
+    }
+
+    /**
+     * 同步加载多视图
+     * @author binze 2020/4/24 10:22
+     */
+    public Observable<View> loadViewsAsync(@IdRes final int... ids){
+        return Observable.create(new ObservableOnSubscribe<View>() {
+            @Override
+            public void subscribe(ObservableEmitter<View> e) throws Exception {
+                for (int id : ids)
+                    e.onNext(findView(id));
+                e.onComplete();
+            }
+        }).compose(RxUtil.<View>setThreadIO());
+    }
+
+    /**
+     * 同步加载多视图
+     * @author binze 2020/4/24 10:22
+     */
+    public Observable<View> loadViewsAsync(final List<Integer> ids){
+        return Observable.create(new ObservableOnSubscribe<View>() {
+            @Override
+            public void subscribe(ObservableEmitter<View> e) throws Exception {
+                for (int id : ids)
+                    e.onNext(findView(id));
+                e.onComplete();
+            }
+        }).compose(RxUtil.<View>setThreadIO());
     }
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.binzeefox.foxtemplate.core.FoxCore;
@@ -13,13 +14,18 @@ import com.binzeefox.foxtemplate.core.tools.Navigator;
 import com.binzeefox.foxtemplate.core.tools.PermissionUtil;
 import com.binzeefox.foxtemplate.core.tools.ViewHelper;
 import com.binzeefox.foxtemplate.tools.RxUtil;
+import com.binzeefox.foxtemplate.tools.dev.ThreadUtil;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;

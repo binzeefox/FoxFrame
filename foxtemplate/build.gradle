@@ -36,17 +36,17 @@ dependencies {
     compileOnly fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
 
     //retrofit
-    api 'com.squareup.retrofit2:retrofit:2.6.2'
-    api 'com.squareup.retrofit2:converter-gson:2.6.2'
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
+    api 'com.squareup.retrofit2:retrofit:2.8.1'
+    api 'com.squareup.retrofit2:converter-gson:2.8.1'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.8.1'
     //日志拦截器
-    api 'com.squareup.okhttp3:logging-interceptor:4.2.2'
+    api 'com.squareup.okhttp3:logging-interceptor:4.5.0'
     api 'com.orhanobut:logger:2.2.0' // 打印日志
 
     //Rx
-    api 'io.reactivex.rxjava2:rxjava:2.2.15'
-    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    api 'io.reactivex.rxjava3:rxjava:3.0.2'
+//    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
 }
