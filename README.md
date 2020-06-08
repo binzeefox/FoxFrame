@@ -6,6 +6,8 @@ FoxFrame 是一个为方便中小型项目开发而遍写的一个开发框架�
 
 由于算是学习过程中的积累产物，一不小心就写了不少东西，导致很多工具类没有很好的介绍，甚至根本没有介绍。我是不会承认因为自己懒得写，所以如果有兴趣可以看看源码，若发现问题相当欢迎练习作者进行指正。希望我早日成为Android大佬，日薪过万
 
+QQ:864706521
+
 ## 快速接入
 
 [![](https://jitpack.io/v/binzeefox/AndroidTemplete.svg)](https://jitpack.io/#binzeefox/AndroidTemplete)
