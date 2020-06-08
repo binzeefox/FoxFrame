@@ -1,2 +1,2 @@
-include ':app', ':foxtemplate'
+include ':app', ':FoxFrame'
 rootProject.name='AndroidTemplete'

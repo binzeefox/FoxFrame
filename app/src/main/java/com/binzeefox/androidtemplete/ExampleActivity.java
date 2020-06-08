@@ -7,19 +7,20 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.binzeefox.foxtemplate.core.FoxCore;
-import com.binzeefox.foxtemplate.core.base.FoxActivity;
-import com.binzeefox.foxtemplate.core.tools.PermissionUtil;
-import com.binzeefox.foxtemplate.tools.dev.TextTools;
-import com.binzeefox.foxtemplate.tools.image.ImagePicker;
-import com.binzeefox.foxtemplate.tools.image.ImageUtil;
-import com.binzeefox.foxtemplate.tools.image.RxImagePicker;
-import com.binzeefox.foxtemplate.tools.phone.NoticeUtil;
-import com.binzeefox.foxtemplate.tools.phone.PhoneStatusUtil;
+import com.binzeefox.foxframe.core.FoxCore;
+import com.binzeefox.foxframe.core.base.FoxActivity;
+import com.binzeefox.foxframe.core.base.callbacks.PermissionCallback;
+import com.binzeefox.foxframe.core.tools.PermissionUtil;
+import com.binzeefox.foxframe.tools.dev.TextTools;
+import com.binzeefox.foxframe.tools.image.ImageUtil;
+import com.binzeefox.foxframe.tools.image.RxImagePicker;
+import com.binzeefox.foxframe.tools.phone.NoticeUtil;
+import com.binzeefox.foxframe.tools.phone.PhoneStatusUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,12 +61,13 @@ public class ExampleActivity extends FoxActivity {
         Context context = FoxCore.getApplication(); //若配置了FoxCore，则该方法获得的是Application实例
         // 接管onCreate
         button = findViewById(R.id.btn_btn);
+//        button.setOnClickListener(v -> checkPermissionExample());
         editText = findViewById(R.id.edit_field);
     }
 
     /**
      * 常用控件操作展示
-     * 详见 {@link com.binzeefox.foxtemplate.core.tools.ViewHelper}
+     * 详见 {@link com.binzeefox.foxframe.core.tools.ViewHelper}
      */
     private void fieldExample(){
         // 设置可用性
@@ -106,19 +108,31 @@ public class ExampleActivity extends FoxActivity {
     }
 
     /**
-     * 请求权限，灵感来自于RxPermission
+     * 直接使用基类封装的方法请求权限
      */
     public void checkPermissionExample(){
+        requestPermission(Collections.singletonList(Manifest.permission.ACCESS_FINE_LOCATION)
+                , failedList -> {
+                    //若全部成功，则返回空列表，否则返回失败的权限
+                    Log.d(TAG, "onNext: " + failedList.toString());
+                });
+    }
+
+    /**
+     * 请求权限，灵感来自于RxPermission
+     */
+    public void checkRxPermissionExample(){
         PermissionUtil.get(Collections.singletonList(Manifest.permission.ACCESS_FINE_LOCATION))
-                .request(this).subscribe(new Observer<Boolean>() {
+                .request(this).subscribe(new Observer<List<String>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 dContainer.add(d);  //将回收器放入容器。每个Activity和Fragment都有一个该容器。在Destroy时进行回收
             }
 
             @Override
-            public void onNext(Boolean aBoolean) {
-                //若全部成功，则返回true，否则为false
+            public void onNext(List<String> failedList) {
+                //若全部成功，则返回空列表，否则返回失败的权限
+                Log.d(TAG, "onNext: " + failedList.toString());
             }
 
             @Override
@@ -142,6 +156,8 @@ public class ExampleActivity extends FoxActivity {
             //上面的方法，第一次调用时返回false。参数接受一个长整型，代表超时时间，单位ms。
             // 在该时间内调用第二次，则返回true
             System.exit(0);
+        } else {
+            NoticeUtil.get().showToast("再次点击返回键关闭应用");
         }
     }
 

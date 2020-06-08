@@ -1,7 +1,7 @@
 package com.binzeefox.androidtemplete;
 
 //import com.binzeefox.foxtemplate.core.FoxCore;
-import com.binzeefox.foxtemplate.core.base.FoxApplication;
+import com.binzeefox.foxframe.core.base.FoxApplication;
 
 public class BaseApplication extends FoxApplication {
 
