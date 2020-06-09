@@ -94,7 +94,7 @@ public abstract class ViewHelper {
             Log.w(TAG, "setErrorById: 目标View非TextView子类");
             return;
         }
-        ((EditText) view).setText(text);
+        ((TextView) view).setText(text);
     }
 
     /**
