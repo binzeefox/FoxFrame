@@ -30,7 +30,7 @@ public class FoxCore {
 //    private Map<String, Object> globalData = new HashMap<>(); //全局数据
     private final DataHolder globalData = new DataHolder(); //2020/06/10 11:20 修改为final类型
 
-    private Stack<AppCompatActivity> activityStack = new Stack<>();  //返回栈
+//    private Stack<AppCompatActivity> activityStack = new Stack<>();  //返回栈
 
     /**
      * 静态初始化
@@ -176,6 +176,7 @@ public class FoxCore {
 
     /* 2020/06/10 11:50 */
     /* 返回栈功能比较鸡肋，还影响性能，决定移除掉 */
+
 //    /**
 //     * 压入返回栈
 //     * @author binze 2019/12/10 11:41
