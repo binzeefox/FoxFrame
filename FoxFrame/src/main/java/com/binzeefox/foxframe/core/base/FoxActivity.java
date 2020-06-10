@@ -184,7 +184,7 @@ public abstract class FoxActivity extends AppCompatActivity {
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (core != null) core.pushActivity(this);
+//        if (core != null) core.pushActivity(this);
         dContainer = new CompositeDisposable();
 
         //设置布局
@@ -203,7 +203,7 @@ public abstract class FoxActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (core != null) core.removeActivity(this);
+//        if (core != null) core.removeActivity(this);
         if (dContainer != null && !dContainer.isDisposed()){
             dContainer.dispose();
             dContainer.clear();

@@ -12,13 +12,12 @@ import com.binzeefox.foxframe.core.FoxCore;
  */
 @SuppressLint("Registered")
 public abstract class FoxApplication extends Application {
-    private static final String TAG = "FoxApplication";
-    public static FoxCore Core; //核心
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Core = FoxCore.init(this);
+        //核心
+        FoxCore core = FoxCore.init(this);
     }
 
     /* 2020/06/10 12:00 */
