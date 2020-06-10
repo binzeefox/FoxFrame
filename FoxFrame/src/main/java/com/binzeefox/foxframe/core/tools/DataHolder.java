@@ -88,7 +88,7 @@ public class DataHolder {
     }
 
     /**
-     * 移出数据
+     * 移除数据
      * @author binze 2020/6/8 9:59
      */
     public Object remove(String key){
