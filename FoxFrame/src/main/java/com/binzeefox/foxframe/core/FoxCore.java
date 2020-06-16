@@ -30,7 +30,7 @@ public class FoxCore {
 //    private Map<String, Object> globalData = new HashMap<>(); //全局数据
     private final DataHolder globalData = new DataHolder(); //2020/06/10 11:20 修改为final类型
 
-//    private Stack<AppCompatActivity> activityStack = new Stack<>();  //返回栈
+    private Stack<AppCompatActivity> activityStack = new Stack<>();  //返回栈
 
     /**
      * 静态初始化
@@ -176,55 +176,57 @@ public class FoxCore {
 
     /* 2020/06/10 11:50 */
     /* 返回栈功能比较鸡肋，还影响性能，决定移除掉 */
+    /* 2020/06/16 14:40 */
+    /* 返回栈功能被应用于部分方法。不能删去 */
 
-//    /**
-//     * 压入返回栈
-//     * @author binze 2019/12/10 11:41
-//     */
-//    public void pushActivity(AppCompatActivity activity){
-//        activityStack.push(activity);
-//    }
-//
-//    /**
-//     * 获取顶部Activity
-//     * @author binze 2019/12/10 11:42
-//     */
-//    public AppCompatActivity getTopActivity(){
-//        return activityStack.peek();
-//    }
-//
-//    /**
-//     * Activity弹栈
-//     * @author binze 2019/12/10 11:43
-//     */
-//    public void popActivity(){
-//        activityStack.pop().finish();
-//    }
-//
-//    /**
-//     * 杀死一定数量的Activity
-//     * @author binze 2019/12/11 13:53
-//     */
-//    public void killActivity(int count){
-//        while (count > 0){
-//            popActivity();
-//            count--;
-//        }
-//    }
-//
-//    /**
-//     * Activity移除
-//     * @author binze 2019/12/10 11:43
-//     */
-//    public void removeActivity(AppCompatActivity activity){
-//        activityStack.remove(activity);
-//    }
-//
-//    /**
-//     * 获取当前Activity列表
-//     * @author binze 2019/12/10 11:43
-//     */
-//    public List<AppCompatActivity> getActivityList(){
-//        return new ArrayList<>(activityStack);
-//    }
+    /**
+     * 压入返回栈
+     * @author binze 2019/12/10 11:41
+     */
+    public void pushActivity(AppCompatActivity activity){
+        activityStack.push(activity);
+    }
+
+    /**
+     * 获取顶部Activity
+     * @author binze 2019/12/10 11:42
+     */
+    public AppCompatActivity getTopActivity(){
+        return activityStack.peek();
+    }
+
+    /**
+     * Activity弹栈
+     * @author binze 2019/12/10 11:43
+     */
+    public void popActivity(){
+        activityStack.pop().finish();
+    }
+
+    /**
+     * 杀死一定数量的Activity
+     * @author binze 2019/12/11 13:53
+     */
+    public void killActivity(int count){
+        while (count > 0){
+            popActivity();
+            count--;
+        }
+    }
+
+    /**
+     * Activity移除
+     * @author binze 2019/12/10 11:43
+     */
+    public void removeActivity(AppCompatActivity activity){
+        activityStack.remove(activity);
+    }
+
+    /**
+     * 获取当前Activity列表
+     * @author binze 2019/12/10 11:43
+     */
+    public List<AppCompatActivity> getActivityList(){
+        return new ArrayList<>(activityStack);
+    }
 }
