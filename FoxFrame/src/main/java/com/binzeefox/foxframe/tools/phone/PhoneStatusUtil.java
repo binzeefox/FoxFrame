@@ -7,6 +7,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -20,6 +21,7 @@ import androidx.annotation.RequiresPermission;
  * 用于获取手机各种状态的工具类
  */
 public class PhoneStatusUtil {
+    private static final String TAG = "PhoneStatusUtil";
     private Context mCtx;
 
     /**
@@ -84,7 +86,9 @@ public class PhoneStatusUtil {
     public void registerNetworkListener(ConnectivityManager.NetworkCallback callback) {
         ConnectivityManager manager = (ConnectivityManager)
                 mCtx.getSystemService(Context.CONNECTIVITY_SERVICE);
-        manager.registerDefaultNetworkCallback(callback);
+        if (manager != null) {
+            manager.registerDefaultNetworkCallback(callback);
+        } else Log.e(TAG, "registerNetworkListener: 注册网络状态失败，没有网络连接" );
     }
 
     /**
@@ -95,7 +99,9 @@ public class PhoneStatusUtil {
     public void unregisterNetworkListener(ConnectivityManager.NetworkCallback callback) {
         ConnectivityManager manager = (ConnectivityManager)
                 mCtx.getSystemService(Context.CONNECTIVITY_SERVICE);
-        manager.unregisterNetworkCallback(callback);
+        if (manager != null) {
+            manager.unregisterNetworkCallback(callback);
+        } else Log.e(TAG, "unregisterNetworkListener: 注册网络状态失败，没有网络连接" );
     }
 
     /**
@@ -127,7 +133,7 @@ public class PhoneStatusUtil {
      *
      * @author binze 2019/12/26 16:27
      */
-    public void showSoftKeyborad(View view) {
+    public void showSoftKeyboard(View view) {
         if (view.requestFocus()) {
             InputMethodManager imm = (InputMethodManager)
                     mCtx.getSystemService(Context.INPUT_METHOD_SERVICE);

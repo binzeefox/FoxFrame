@@ -22,6 +22,11 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 
+/**
+ * File与Uri间互相获取
+ * @author binze
+ * 2020/6/15 14:21
+ */
 public class FileUriUtil {
     private static final String TAG = "FileUriUtil";
     private Context mContext;

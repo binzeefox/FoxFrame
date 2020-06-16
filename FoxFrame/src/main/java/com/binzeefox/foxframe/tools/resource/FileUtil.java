@@ -57,7 +57,10 @@ public class FileUtil {
             File temp = new File(path);
             if (temp.exists())
                 temp.delete();
-            temp.createNewFile();
+            if (!temp.createNewFile()){
+                Log.e(TAG, "getImageTempPath: create file failed!!!");
+                return null;
+            }
         } catch (IOException e) {
             path = null;
         }
@@ -76,7 +79,10 @@ public class FileUtil {
             File file = new File(path);
             if (file.exists())
                 file.delete();
-            file.createNewFile();
+            if (!file.createNewFile()){
+                Log.e(TAG, "getCropTempPath: create file failed!!!");
+                return null;
+            }
         }catch (IOException e){
             path = null;
         }
@@ -133,7 +139,7 @@ public class FileUtil {
                         (context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
             } else if (DOWNLOAD_AUTHORITY.equals(rawUri.getAuthority())){
                 Uri contentUri = ContentUris
-                        .withAppendedId(Uri.parse(DOWNLOAD_URI), Long.valueOf(docId));
+                        .withAppendedId(Uri.parse(DOWNLOAD_URI), Long.parseLong(docId));
                 return getFileFromSelection(context, contentUri, null);
             }
         } else if ("content".equalsIgnoreCase(rawUri.getScheme())){
@@ -141,15 +147,16 @@ public class FileUtil {
             return getFileFromSelection(context, rawUri, null);
         } else if (("file".equalsIgnoreCase(rawUri.getScheme()))){
             //文件类型uri，直接获取
-            return new File(rawUri.getPath());
+            String path = rawUri.getPath();
+            return path != null ? new File(rawUri.getPath()) : null;
         }
         return null;
     }
 
     /**
      * 写入流文件
-     * @param is
-     * @param file
+     * @param is    input stream
+     * @param file  目标文件
      */
     public void writeFileStream(InputStream is, File file) throws IOException {
         if (file.exists()) file.delete();
@@ -239,8 +246,10 @@ public class FileUtil {
                 dir.delete();
                 dir.mkdir();
             }
-        } else
-            dir.mkdir();
+        } else if (!dir.mkdir()){
+            Log.e(TAG, "getTempDir: create dir failed" );
+            return null;
+        }
         return dir.getAbsolutePath();
     }
 
@@ -261,7 +270,7 @@ public class FileUtil {
                 path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
             cursor.close();
         }
-        return new File(path);
+        return path == null ? null : new File(path);
     }
 
 

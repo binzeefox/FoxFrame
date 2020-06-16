@@ -12,6 +12,9 @@ package com.binzeefox.foxframe.tools.dev;
 // ScheduledThreadPool: 核心线程数固定，非核心线程数无限制，常用于执行定时任务和又周期性的任务
 // SingleThreadPool: 只有一个核心线程，确保所有任务都在统一线程按顺序执行
 
+import android.os.Handler;
+import android.os.Looper;
+
 import java.io.Closeable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -39,6 +42,15 @@ public class ThreadUtil implements Closeable {
             }
         }
         return sInstance;
+    }
+
+    /**
+     * 主线程运行
+     * @author binze 2020/6/16 14:09
+     */
+    public static void runOnUiThread(Runnable work){
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(work);
     }
 
     /**

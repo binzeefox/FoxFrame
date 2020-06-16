@@ -14,7 +14,6 @@ import android.widget.EditText;
 
 import com.binzeefox.foxframe.core.FoxCore;
 import com.binzeefox.foxframe.core.base.FoxActivity;
-import com.binzeefox.foxframe.core.base.callbacks.PermissionCallback;
 import com.binzeefox.foxframe.core.tools.PermissionUtil;
 import com.binzeefox.foxframe.tools.dev.TextTools;
 import com.binzeefox.foxframe.tools.image.ImageUtil;
@@ -260,7 +259,7 @@ public class ExampleActivity extends FoxActivity {
         long freeMem = util.getFreeMemKB();    //获取当前应用可用内存，单位KB
         boolean gps = util.isGPSEnabled(); //是否开启GPS
         boolean netAvailable = util.isNetworkAvailable(); //网络是否可用
-        util.showSoftKeyborad(editText);    //以editText为焦点打开键盘
+        util.showSoftKeyboard(editText);    //以editText为焦点打开键盘
 
         //网络回调
         ConnectivityManager.NetworkCallback callback = new ConnectivityManager.NetworkCallback(){

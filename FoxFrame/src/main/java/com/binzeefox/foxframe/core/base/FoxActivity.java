@@ -38,10 +38,10 @@ public abstract class FoxActivity extends AppCompatActivity {
     private static final String TAG = "FoxActivity";
     protected CompositeDisposable dContainer;   //RX回收器
 
-    private FoxCore core = FoxCore.get();   //获取核心
+//    private FoxCore core = FoxCore.get();   //获取核心
 
-    private SparseArray<Disposable> mTimerQueue = new SparseArray<>();
-    private SparseBooleanArray mFlagQueue = new SparseBooleanArray();   //二次点击标识
+    private final SparseArray<Disposable> mTimerQueue = new SparseArray<>();
+    private final SparseBooleanArray mFlagQueue = new SparseBooleanArray();   //二次点击标识
 
     /**
      * 通过资源ID加载布局，优先级较低
