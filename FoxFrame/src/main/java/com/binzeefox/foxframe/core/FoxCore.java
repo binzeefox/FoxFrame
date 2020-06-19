@@ -100,7 +100,7 @@ public class FoxCore {
             Log.e(TAG, "getVersionName: 获取版本名失败");
             return null;
         }
-        return info.packageName;
+        return info.versionName;
     }
 
     /**

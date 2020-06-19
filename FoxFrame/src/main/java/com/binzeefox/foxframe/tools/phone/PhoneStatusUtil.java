@@ -65,6 +65,7 @@ public class PhoneStatusUtil {
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     public boolean isNetWorkConnected() {
+        if (!isNetworkAvailable()) return false;
         ConnectivityManager connectivityManager = (ConnectivityManager)
                 mCtx.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {

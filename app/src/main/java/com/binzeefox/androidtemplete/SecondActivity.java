@@ -3,15 +3,21 @@ package com.binzeefox.androidtemplete;
 import android.os.Bundle;
 
 import com.binzeefox.foxframe.core.base.FoxActivity;
-import com.binzeefox.foxframe.views.cameraview.TextureCameraView;
 
 public class SecondActivity extends FoxActivity {
 
+    @Override
+    protected int onSetLayoutResource() {
+        return R.layout.activity_second;
+    }
 
     @Override
     protected void create(Bundle savedInstanceState) {
-        TextureCameraView cameraView = findViewById(R.id.texture_view);
-//        cameraView.initCamera();
-        cameraView.previewOn();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

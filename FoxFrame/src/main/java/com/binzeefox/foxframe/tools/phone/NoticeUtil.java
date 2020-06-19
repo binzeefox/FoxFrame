@@ -127,7 +127,7 @@ public class NoticeUtil {
      * @author binze 2019/10/21 15:08
      * update 2019/12/17 取消自动show()
      */
-    public CustomDialogFragment showSimpleAlertDialog(String title, String message, boolean cancelable
+    public CustomDialogFragment simpleAlertDialog(String title, String message, boolean cancelable
             , AlertDialog.OnClickListener positiveListener
             , AlertDialog.OnClickListener navigateListener) {
 
