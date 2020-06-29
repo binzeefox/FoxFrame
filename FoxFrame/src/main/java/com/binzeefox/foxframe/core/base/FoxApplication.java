@@ -12,7 +12,7 @@ import com.binzeefox.foxframe.core.FoxCore;
  * 重构自 2019/12/9 10:28
  */
 @SuppressLint("Registered")
-public abstract class FoxApplication extends Application {
+public class FoxApplication extends Application {
     private static final String TAG = "FoxApplication";
     private FoxCore core;
 
