@@ -36,6 +36,23 @@ public class RxUtil {
      * IO线程运行，主线程观察
      * @param <T> 返回的类型
      */
+    public static <T> io.reactivex.rxjava3.core.ObservableTransformer<T, T> setThreadIO3() {
+        return new io.reactivex.rxjava3.core.ObservableTransformer<T, T>() {
+            @Override
+            public io.reactivex.rxjava3.core.ObservableSource<T> apply(io.reactivex.rxjava3.core.Observable<T> upstream) {
+                return upstream
+                        .subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io())
+                        .observeOn(io.reactivex.rxjava3.android.schedulers.AndroidSchedulers.mainThread());
+            }
+        };
+    }
+
+    /**
+     * 线程控制
+     *
+     * 计算线程运行，主线程观察
+     * @param <T> 返回的类型
+     */
     public static <T> ObservableTransformer<T, T> setThreadComputation() {
         return new ObservableTransformer<T, T>() {
             @Override
@@ -50,7 +67,24 @@ public class RxUtil {
     /**
      * 线程控制
      *
-     * IO线程运行，主线程观察
+     * 计算线程运行，主线程观察
+     * @param <T> 返回的类型
+     */
+    public static <T> io.reactivex.rxjava3.core.ObservableTransformer<T, T> setThreadComputation3() {
+        return new io.reactivex.rxjava3.core.ObservableTransformer<T, T>() {
+            @Override
+            public io.reactivex.rxjava3.core.ObservableSource<T> apply(io.reactivex.rxjava3.core.Observable<T> upstream) {
+                return upstream
+                        .subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.computation())
+                        .observeOn(io.reactivex.rxjava3.android.schedulers.AndroidSchedulers.mainThread());
+            }
+        };
+    }
+
+    /**
+     * 线程控制
+     *
+     * 新线程运行，主线程观察
      * @param <T> 返回的类型
      */
     public static <T> ObservableTransformer<T, T> setThreadNew() {
@@ -60,6 +94,23 @@ public class RxUtil {
                 return upstream
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread());
+            }
+        };
+    }
+
+    /**
+     * 线程控制
+     *
+     * 新线程运行，主线程观察
+     * @param <T> 返回的类型
+     */
+    public static <T> io.reactivex.rxjava3.core.ObservableTransformer<T, T> setThreadNew3() {
+        return new io.reactivex.rxjava3.core.ObservableTransformer<T, T>() {
+            @Override
+            public io.reactivex.rxjava3.core.ObservableSource<T> apply(io.reactivex.rxjava3.core.Observable<T> upstream) {
+                return upstream
+                        .subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.newThread())
+                        .observeOn(io.reactivex.rxjava3.android.schedulers.AndroidSchedulers.mainThread());
             }
         };
     }

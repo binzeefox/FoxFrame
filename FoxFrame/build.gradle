@@ -10,7 +10,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 29
         versionCode 3
-        versionName "v0.3.3"
+        versionName "v0.3.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -47,6 +47,7 @@ dependencies {
     api 'com.orhanobut:logger:2.2.0' // 打印日志
 
     //Rx
-    api 'io.reactivex.rxjava3:rxjava:3.0.2'
+    api 'io.reactivex.rxjava3:rxjava:3.0.4'
+    api 'io.reactivex.rxjava3:rxandroid:3.0.0'
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
 }
