@@ -10,11 +10,11 @@ QQ:864706521
 
 ## 快速接入
 
-[![](https://jitpack.io/v/binzeefox/AndroidTemplete.svg)](https://jitpack.io/#binzeefox/AndroidTemplete)
+[![](https://jitpack.io/v/binzeefox/FoxFrame.svg)](https://jitpack.io/#binzeefox/FoxFrame)
 
 在项目的 *app.gradle* 文件中的 dependencies 代码块中填写以下依赖
 ```gradle
-    implementation 'com.github.binzeefox:AndroidTemplete:Tag';  //Tag为最新版本号
+    implementation 'com.github.binzeefox:FoxFrame:tag';  //Tag为最新版本号
 ```
 并在项目的 *Project.Gradle* 里的 allprojects.repositories 里添加 ```maven { url "https://jitpack.io" }``` 。然后同步项目即可
 
