@@ -38,6 +38,7 @@ import io.reactivex.functions.Consumer;
 public abstract class FoxFragment extends Fragment {
     private static final String TAG = "FoxFragment";
     private CompositeDisposable dContainer; //RX回收器
+    private io.reactivex.rxjava3.disposables.CompositeDisposable dContainer3; //RX回收器
     private View root;
 
     private FoxCore core = FoxCore.get();   //核心
@@ -178,6 +179,7 @@ public abstract class FoxFragment extends Fragment {
     public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = onSetLayoutView(inflater, container);
         dContainer = new CompositeDisposable();
+        dContainer3 = new io.reactivex.rxjava3.disposables.CompositeDisposable();
         if (root == null && onSetLayoutResource() != -1)
             root = inflater.inflate(onSetLayoutResource(), container, false);
         create(root, savedInstanceState);
@@ -193,6 +195,8 @@ public abstract class FoxFragment extends Fragment {
         super.onResume();
         if (dContainer == null || dContainer.isDisposed())
             dContainer = new CompositeDisposable();
+        if (dContainer3 == null || dContainer3.isDisposed())
+            dContainer3 = new io.reactivex.rxjava3.disposables.CompositeDisposable();
     }
 
     @Override
@@ -203,6 +207,11 @@ public abstract class FoxFragment extends Fragment {
             dContainer.dispose();
             dContainer.clear();
         }
+        if (dContainer3 != null &&!dContainer3.isDisposed()){
+            dContainer3.dispose();
+            dContainer3.clear();
+        }
         dContainer = null;
+        dContainer3 = null;
     }
 }

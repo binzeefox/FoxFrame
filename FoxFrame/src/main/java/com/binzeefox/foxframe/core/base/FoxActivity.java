@@ -37,6 +37,7 @@ import io.reactivex.functions.Consumer;
 public abstract class FoxActivity extends AppCompatActivity {
     private static final String TAG = "FoxActivity";
     protected CompositeDisposable dContainer;   //RX回收器
+    protected io.reactivex.rxjava3.disposables.CompositeDisposable dContainer3;   //RX回收器
 
 //    private FoxCore core = FoxCore.get();   //获取核心
 
@@ -186,6 +187,7 @@ public abstract class FoxActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 //        if (core != null) core.pushActivity(this);
         dContainer = new CompositeDisposable();
+        dContainer3 = new io.reactivex.rxjava3.disposables.CompositeDisposable();
 
         //设置布局
         View layout = onSetLayoutView();
@@ -194,6 +196,19 @@ public abstract class FoxActivity extends AppCompatActivity {
             setContentView(onSetLayoutResource());
 
         create(savedInstanceState);
+    }
+
+    /**
+     * 生命周期 onResume
+     * @author binze 2020/6/29 15:50
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (dContainer == null || dContainer.isDisposed())
+            dContainer = new CompositeDisposable();
+        if (dContainer3 == null || dContainer3.isDisposed())
+            dContainer3 = new io.reactivex.rxjava3.disposables.CompositeDisposable();
     }
 
     /**
@@ -208,6 +223,11 @@ public abstract class FoxActivity extends AppCompatActivity {
             dContainer.dispose();
             dContainer.clear();
         }
+        if (dContainer3 != null && !dContainer3.isDisposed()){
+            dContainer3.dispose();
+            dContainer3.clear();
+        }
         dContainer = null;
+        dContainer3 = null;
     }
 }
