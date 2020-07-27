@@ -39,7 +39,7 @@ public abstract class FoxActivity extends AppCompatActivity {
     protected CompositeDisposable dContainer;   //RX回收器
     protected io.reactivex.rxjava3.disposables.CompositeDisposable dContainer3;   //RX回收器
 
-//    private FoxCore core = FoxCore.get();   //获取核心
+    private FoxCore core = FoxCore.get();   //获取核心
 
     private final SparseArray<Disposable> mTimerQueue = new SparseArray<>();
     private final SparseBooleanArray mFlagQueue = new SparseBooleanArray();   //二次点击标识
@@ -185,7 +185,7 @@ public abstract class FoxActivity extends AppCompatActivity {
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (core != null) core.pushActivity(this);
+        if (core != null) core.pushActivity(this);
         dContainer = new CompositeDisposable();
         dContainer3 = new io.reactivex.rxjava3.disposables.CompositeDisposable();
 
@@ -218,7 +218,7 @@ public abstract class FoxActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        if (core != null) core.removeActivity(this);
+        if (core != null) core.removeActivity(this);
         if (dContainer != null && !dContainer.isDisposed()){
             dContainer.dispose();
             dContainer.clear();

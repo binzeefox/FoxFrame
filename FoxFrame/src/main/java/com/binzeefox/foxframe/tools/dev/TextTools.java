@@ -1,6 +1,8 @@
 package com.binzeefox.foxframe.tools.dev;
 
 import android.icu.util.Calendar;
+import android.util.Patterns;
+import android.webkit.URLUtil;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -74,6 +76,14 @@ public class TextTools {
                 return true;// 有一个中文字符就返回
         }
         return false;
+    }
+
+    /**
+     * 是合法网络Url
+     * @author binze 2020/7/3 15:43
+     */
+    public static boolean isWebUrl(String url){
+        return Patterns.WEB_URL.matcher(url).matches();
     }
 
     /**

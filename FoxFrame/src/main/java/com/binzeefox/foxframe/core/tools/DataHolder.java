@@ -10,6 +10,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * 数据保存类
  *
  * 当数据发生改变时，自动通知所有注册过的回调
+ * 可能造成主线程阻塞。使用时请注意
  *
  * @author binze
  * 2020/1/6 9:51

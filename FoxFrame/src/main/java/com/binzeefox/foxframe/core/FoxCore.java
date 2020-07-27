@@ -28,7 +28,7 @@ public class FoxCore {
     private static Application mApp;   //绑定的Application
 
 //    private Map<String, Object> globalData = new HashMap<>(); //全局数据
-    private final DataHolder globalData = new DataHolder(); //2020/06/10 11:20 修改为final类型
+    private final DataHolder globalData = new DataHolder(); //2020/06/10 11:20 修改为final类型 **可能造成主线程阻塞。使用时请注意**
 
     private Stack<AppCompatActivity> activityStack = new Stack<>();  //返回栈
 
