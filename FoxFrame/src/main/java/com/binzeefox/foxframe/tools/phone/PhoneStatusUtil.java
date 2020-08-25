@@ -5,6 +5,8 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.util.Log;
@@ -75,6 +77,27 @@ public class PhoneStatusUtil {
         } else {
             return false;
         }
+    }
+
+    /**
+     * 获取网络状态
+     * @author binze 2020/8/25 11:42
+     */
+    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+    public int getNetworkState(){
+        if (!isNetworkAvailable() || !isNetWorkConnected()) return 0;
+        ConnectivityManager manager = (ConnectivityManager)
+                mCtx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (manager == null) return 0;
+        Network network = manager.getActiveNetwork();
+        if (network == null) return 0;
+        NetworkCapabilities capabilities = manager.getNetworkCapabilities(network);
+        if (capabilities == null) return 0;
+        if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
+            return 1;   //移动网络
+        if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI))
+            return 2;   //Wifi
+        return 0;
     }
 
     /**
