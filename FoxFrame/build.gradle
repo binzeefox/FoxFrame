@@ -8,9 +8,9 @@ android {
 
     defaultConfig {
         minSdkVersion 26
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 3
-        versionName "v0.3.7"
+        versionName "v0.3.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -35,7 +35,7 @@ android {
 dependencies {
     compileOnly fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     testImplementation 'junit:junit:4.13'
 
     //retrofit
@@ -51,3 +51,22 @@ dependencies {
     api 'io.reactivex.rxjava3:rxandroid:3.0.0'
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
 }
+
+def jar_name = "FoxFrame.jar"
+
+task makeJar(type: Copy) {
+    //删除存在的
+    delete 'build/libs/FoxFrame.jar'
+    //设置拷贝的文件
+    from('build/intermediates/aar_main_jar/release/')
+    //打进jar包后的文件目录
+    into('build/libs/')
+    //将classes.jar放入build/libs/目录下
+    //include ,exclude参数来设置过滤
+    //（我们只关心classes.jar这个文件）
+    include('classes.jar')
+    //重命名
+    rename ('classes.jar', 'FoxFrame.jar')
+}
+
+makeJar.dependsOn(build)

@@ -17,6 +17,8 @@ import com.binzeefox.foxframe.views.CustomDialogFragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresPermission;
 
+import java.util.Objects;
+
 import static android.content.Context.VIBRATOR_SERVICE;
 import static android.os.VibrationEffect.DEFAULT_AMPLITUDE;
 
@@ -27,12 +29,14 @@ import static android.os.VibrationEffect.DEFAULT_AMPLITUDE;
  * 单例
  * Toast工具
  * 弹窗工具
+ *
+ * 2020/09/03 DialogFragment必须用Activity作为Ctx
  */
 public class NoticeUtil {
     private static final String TAG = "NoticeUtil";
     private static NoticeUtil mInstance;    //单例
     private CustomDialogFragment dialogHelper;  //弹窗助手
-    private Context mCtx;    //Application 实例
+//    private Context mCtx;    //Application 实例
     private Toast mToast;   //Toast实例
     private FoxCore core = FoxCore.get();
 
@@ -41,20 +45,29 @@ public class NoticeUtil {
      */
     public static NoticeUtil get() {
         if (mInstance != null) return mInstance;
-        mInstance = new NoticeUtil(FoxCore.getApplication());
+//        mInstance = new NoticeUtil(FoxCore.getApplication());
+        mInstance = new NoticeUtil();
         return mInstance;
     }
 
-    /**
-     * 构造器
-     *
-     * @param ctx ctx
-     */
-    private NoticeUtil(@NonNull Context ctx) {
-        //获取全局ApplicationContext防止内存泄漏
-        mCtx = ctx.getApplicationContext();
-    }
+//    /**
+//     * 构造器
+//     *
+//     * @param ctx ctx
+//     */
+//    private NoticeUtil(@NonNull Context ctx) {
+//        //获取全局ApplicationContext防止内存泄漏
+//        mCtx = ctx.getApplicationContext();
+//    }
 
+    /**
+     * 获取上下文
+     *
+     * @author 狐彻 2020/9/3 15:56
+     */
+    private Context getContext(){
+        return Objects.requireNonNull(FoxCore.get()).getTopActivity();
+    }
 
 //    ******↓Toast相关
 
@@ -66,7 +79,7 @@ public class NoticeUtil {
     public void showToast(int resourceId) {
         if (mToast != null)
             mToast.cancel();
-        mToast = Toast.makeText(mCtx, resourceId, Toast.LENGTH_LONG);
+        mToast = Toast.makeText(getContext(), resourceId, Toast.LENGTH_LONG);
         mToast.show();
     }
 
@@ -79,7 +92,7 @@ public class NoticeUtil {
         if (TextUtils.isEmpty(text)) return;
         if (mToast != null)
             mToast.cancel();
-        mToast = Toast.makeText(mCtx, text, Toast.LENGTH_LONG);
+        mToast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
         mToast.show();
     }
 
@@ -92,7 +105,7 @@ public class NoticeUtil {
             dialogHelper = null;
         }
 
-        dialogHelper = CustomDialogFragment.get(mCtx);
+        dialogHelper = CustomDialogFragment.get(getContext());
         return dialogHelper;
     }
 
@@ -103,7 +116,7 @@ public class NoticeUtil {
         CustomDialogFragment dialogHelper = getDialogHelper();
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams
                 (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        ProgressBar bar = new ProgressBar(mCtx);
+        ProgressBar bar = new ProgressBar(getContext());
         bar.setPadding(0, 30, 0, 30);
         bar.setLayoutParams(params);
         bar.setIndeterminate(true);
@@ -166,7 +179,7 @@ public class NoticeUtil {
      * @author binze 2019/12/17 10:41
      */
     public class Vibrator{
-        private android.os.Vibrator vibrator = (android.os.Vibrator) mCtx.getSystemService(VIBRATOR_SERVICE);
+        private android.os.Vibrator vibrator = (android.os.Vibrator) getContext().getSystemService(VIBRATOR_SERVICE);
         private int amplitude = DEFAULT_AMPLITUDE;  //振幅
 
         private Vibrator(){}
