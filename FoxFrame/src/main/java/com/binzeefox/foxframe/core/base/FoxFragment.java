@@ -37,8 +37,8 @@ import io.reactivex.functions.Consumer;
  */
 public abstract class FoxFragment extends Fragment {
     private static final String TAG = "FoxFragment";
-    private CompositeDisposable dContainer; //RX回收器
-    private io.reactivex.rxjava3.disposables.CompositeDisposable dContainer3; //RX回收器
+    protected CompositeDisposable dContainer; //RX回收器
+    protected io.reactivex.rxjava3.disposables.CompositeDisposable dContainer3; //RX回收器
     private View root;
 
     private FoxCore core = FoxCore.get();   //核心

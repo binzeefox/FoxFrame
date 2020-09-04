@@ -4,13 +4,13 @@ group='com.github.binzeefox'
 apply plugin:'maven'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 26
         targetSdkVersion 30
         versionCode 3
-        versionName "v0.3.8"
+        versionName "v0.3.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
