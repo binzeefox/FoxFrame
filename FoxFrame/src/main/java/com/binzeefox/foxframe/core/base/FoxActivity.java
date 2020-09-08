@@ -17,6 +17,7 @@ import com.binzeefox.foxframe.core.base.callbacks.PermissionCallback;
 import com.binzeefox.foxframe.core.tools.ActivityRequestUtil;
 import com.binzeefox.foxframe.core.tools.Navigator;
 import com.binzeefox.foxframe.core.tools.PermissionUtil;
+import com.binzeefox.foxframe.core.tools.RequestUtil;
 import com.binzeefox.foxframe.core.tools.ViewHelper;
 import com.binzeefox.foxframe.tools.RxUtil;
 
@@ -142,8 +143,9 @@ public abstract class FoxActivity extends AppCompatActivity {
      *
      * @author binze 2019/12/11 11:31
      */
-    public Observable<ActivityRequestUtil.Result> requestActivity(Intent intent, Bundle options) {
-        return ActivityRequestUtil.init(intent, options).request(getSupportFragmentManager());
+    public Observable<RequestUtil.Result> requestActivity(Intent intent, Bundle options, int requestCode) {
+//        return RequestUtil.init(intent, options).request(getSupportFragmentManager());
+        return RequestUtil.with(this).intentRequest(intent, options, requestCode);
     }
 
     /**

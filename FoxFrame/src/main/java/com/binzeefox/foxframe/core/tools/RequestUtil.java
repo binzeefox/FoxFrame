@@ -70,6 +70,10 @@ public class RequestUtil {
         return new RequestUtil(fragment.getChildFragmentManager());
     }
 
+    public static RequestUtil with(final FragmentManager manager){
+        return new RequestUtil(manager);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // 参数方法
     ///////////////////////////////////////////////////////////////////////////
