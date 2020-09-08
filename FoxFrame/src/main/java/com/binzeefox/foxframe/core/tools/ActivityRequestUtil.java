@@ -18,6 +18,7 @@ import io.reactivex.ObservableOnSubscribe;
  *
  * @author binze
  * 2019/11/29 15:31
+ * @deprecated 2020/09/08 12:35 see {@link RequestUtil}
  */
 public class ActivityRequestUtil {
     private static final String TAG = "ActivityRequestUtil";
