@@ -67,35 +67,35 @@ public abstract class FoxFragment extends Fragment {
      */
     protected abstract void create(View root, Bundle savedInstanceState);
 
-    /**
-     * 请求权限
-     * @author binze 2019/12/10 12:11
-     */
-    protected void requestPermission(List<String> permissionList
-            , final PermissionCallback callback){
-        PermissionUtil.get(permissionList).request(this)
-                .subscribe(new Observer<List<String>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        dContainer.add(d);
-                    }
-
-                    @Override
-                    public void onNext(List<String> failedList) {
-                        callback.callback(failedList);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, "onError: 请求权限异常", e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
+//    /**
+//     * 请求权限
+//     * @author binze 2019/12/10 12:11
+//     */
+//    protected void requestPermission(List<String> permissionList
+//            , final PermissionCallback callback){
+//        PermissionUtil.get(permissionList).request(this)
+//                .subscribe(new Observer<List<String>>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                        dContainer.add(d);
+//                    }
+//
+//                    @Override
+//                    public void onNext(List<String> failedList) {
+//                        callback.callback(failedList);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.e(TAG, "onError: 请求权限异常", e);
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
+//    }
 
     /**
      * 跳转

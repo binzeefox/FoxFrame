@@ -16,6 +16,8 @@ import java.util.Stack;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import io.reactivex.rxjava3.annotations.NonNull;
+
 /**
  * 框架核心
  *
@@ -47,11 +49,10 @@ public class FoxCore {
      *
      * @author binze 2019/12/10 11:04
      */
-    public synchronized static FoxCore get() {
+    public synchronized static @NonNull FoxCore get() {
         if (sInstance == null) {
             Throwable t = new IllegalAccessException("should call init(Application) first!!!");
-            Log.e(TAG, "get: 获取失败", t);
-            return null;
+            throw new RuntimeException(t);
         }
         return sInstance;
     }

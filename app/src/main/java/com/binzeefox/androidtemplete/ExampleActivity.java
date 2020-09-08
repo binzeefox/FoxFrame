@@ -106,45 +106,45 @@ public class ExampleActivity extends FoxActivity {
         Bundle income = getDataFromNavigate();
     }
 
-    /**
-     * 直接使用基类封装的方法请求权限
-     */
-    public void checkPermissionExample(){
-        requestPermission(Collections.singletonList(Manifest.permission.ACCESS_FINE_LOCATION)
-                , failedList -> {
-                    //若全部成功，则返回空列表，否则返回失败的权限
-                    Log.d(TAG, "onNext: " + failedList.toString());
-                });
-    }
+//    /**
+//     * 直接使用基类封装的方法请求权限
+//     */
+//    public void checkPermissionExample(){
+//        requestPermission(Collections.singletonList(Manifest.permission.ACCESS_FINE_LOCATION)
+//                , failedList -> {
+//                    //若全部成功，则返回空列表，否则返回失败的权限
+//                    Log.d(TAG, "onNext: " + failedList.toString());
+//                });
+//    }
 
-    /**
-     * 请求权限，灵感来自于RxPermission
-     */
-    public void checkRxPermissionExample(){
-        PermissionUtil.get(Collections.singletonList(Manifest.permission.ACCESS_FINE_LOCATION))
-                .request(this).subscribe(new Observer<List<String>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                dContainer.add(d);  //将回收器放入容器。每个Activity和Fragment都有一个该容器。在Destroy时进行回收
-            }
-
-            @Override
-            public void onNext(List<String> failedList) {
-                //若全部成功，则返回空列表，否则返回失败的权限
-                Log.d(TAG, "onNext: " + failedList.toString());
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
-    }
+//    /**
+//     * 请求权限，灵感来自于RxPermission
+//     */
+//    public void checkRxPermissionExample(){
+//        PermissionUtil.get(Collections.singletonList(Manifest.permission.ACCESS_FINE_LOCATION))
+//                .request(this).subscribe(new Observer<List<String>>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//                dContainer.add(d);  //将回收器放入容器。每个Activity和Fragment都有一个该容器。在Destroy时进行回收
+//            }
+//
+//            @Override
+//            public void onNext(List<String> failedList) {
+//                //若全部成功，则返回空列表，否则返回失败的权限
+//                Log.d(TAG, "onNext: " + failedList.toString());
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//
+//            }
+//        });
+//    }
 
     /**
      * 利用 {@link FoxActivity#checkCallAgain(int)}   实现二次返回键退出功能
