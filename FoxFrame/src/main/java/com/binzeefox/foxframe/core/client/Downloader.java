@@ -42,6 +42,7 @@ public class Downloader {
     private final Context mCtx;
     private final DownloadManager mManager;
     private BroadcastReceiver mReceiver;
+    private DownloadManager.Request mRequest;
 
 
     /**
@@ -93,7 +94,7 @@ public class Downloader {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE
     })
-    public long download(Params params) {
+    public Downloader download(Params params) {
         DownloadManager.Request request = new DownloadManager.Request(params.downloadUri);
         request.setAllowedNetworkTypes(params.wifiOnly ? NETWORK_WIFI : NETWORK_MOBILE);
 
@@ -117,7 +118,27 @@ public class Downloader {
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, params.externalFileName);
 
         //开始下载
-        return mManager.enqueue(request);
+//        return mManager.enqueue(request);
+        mRequest = request;
+        return this;
+    }
+
+    /**
+     * 获取请求实例
+     *
+     * @author 狐彻 2020/09/08 15:43
+     */
+    public DownloadManager.Request getRequest() {
+        return mRequest;
+    }
+
+    /**
+     * 开始下载
+     *
+     * @author 狐彻 2020/09/08 15:43
+     */
+    public long start(){
+        return mManager.enqueue(mRequest);
     }
 
     /**

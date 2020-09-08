@@ -36,9 +36,9 @@ public class ScopedStorageUtil {
 
     /* 常用插入Uri */
     public static final Uri URI_IMAGE = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-    public static final Uri URI_AUDIO = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-    public static final Uri URI_VIDEO = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-    public static final Uri URI_DOWNLOAD = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+    public static final Uri URI_AUDIO = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+    public static final Uri URI_VIDEO = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+    public static final Uri URI_DOWNLOAD = MediaStore.Downloads.EXTERNAL_CONTENT_URI;
     public static final Uri URI_DOCUMENTS = MediaStore.Files.getContentUri("external");
     /* 常用插入Uri Finish*/
 
@@ -170,11 +170,20 @@ public class ScopedStorageUtil {
         }
 
         /**
+         * 保存
+         *
+         * @author 狐彻 2020/09/08 15:21
+         */
+        public Uri save(){
+            return mResolver.insert(uri, values);
+        }
+
+        /**
          * 保存开始
          *
          * @author 狐彻 2020/09/08 13:53
          */
-        public Observable<InsertResult> save() {
+        public Observable<InsertResult> saveAsync() {
             return Observable.create(new ObservableOnSubscribe<InsertResult>() {
                 @Override
                 public void subscribe(ObservableEmitter<InsertResult> emitter) throws Exception {
