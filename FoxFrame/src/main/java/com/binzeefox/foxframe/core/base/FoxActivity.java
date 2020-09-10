@@ -236,7 +236,7 @@ public abstract class FoxActivity extends AppCompatActivity {
      * @author binze 2020/6/29 15:50
      */
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
         if (dContainer == null || dContainer.isDisposed())
             dContainer = new CompositeDisposable();

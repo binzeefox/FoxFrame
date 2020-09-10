@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
 
+import com.binzeefox.foxframe.core.base.FoxApplication;
 import com.binzeefox.foxframe.core.tools.DataHolder;
 
 import java.util.ArrayList;
@@ -73,6 +74,17 @@ public class FoxCore {
      */
     public static Application getApplication() {
         return mApp;
+    }
+
+    /**
+     * 返回authority，若在FoxApplication中设置则获取该内容，否则默认返回包名加".authority"
+     *
+     * @author 狐彻 2020/09/09 14:38
+     */
+    public static String getAuthority(){
+        if (getApplication() instanceof FoxApplication)
+            return ((FoxApplication) getApplication()).getAuthority();
+        else return getApplication().getPackageName() + ".authority";
     }
 
     /**

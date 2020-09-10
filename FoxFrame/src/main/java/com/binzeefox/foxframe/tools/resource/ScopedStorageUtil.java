@@ -97,6 +97,16 @@ public class ScopedStorageUtil {
         return new Reader(tableUri);
     }
 
+    /**
+     * 执行删除操作
+     *
+     * @author 狐彻 2020/09/10 9:35
+     */
+    public void delete(Uri fileUri){
+        FoxCore.getApplication().getContentResolver()
+                .delete(fileUri, null, null);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // 工具方法
     ///////////////////////////////////////////////////////////////////////////

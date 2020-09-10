@@ -2,6 +2,7 @@ package com.binzeefox.foxframe.core.tools;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.binzeefox.foxframe.tools.RxUtil;
@@ -133,6 +134,7 @@ public class ActivityRequestUtil {
 
         @Override
         public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+            Uri uri=  data.getData();
             emitter.onNext(new Result(data, resultCode, requestCode));
             emitter.onComplete();
         }

@@ -1,6 +1,7 @@
 package com.binzeefox.foxframe.tools.resource;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -13,61 +14,82 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
+
 import com.binzeefox.foxframe.core.FoxCore;
+import com.binzeefox.foxframe.tools.dev.LogUtil;
 
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.FileProvider;
-
 /**
- * File与Uri间互相获取
- * @author binze
- * 2020/6/15 14:21
+ * Uri工具类
+ *
+ * @author 狐彻
+ * 2020/09/08 9:50
  */
-public class FileUriUtil {
-    private static final String TAG = "FileUriUtil";
-    private Context mContext;
-    private final String cAuthority;
+public class UriUtil {
+    private static final String TAG = "UriUtil";
+
+    private UriUtil(){
+
+    }
+
+    public static UriUtil get(){
+        return new UriUtil();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // 方法
+    ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * 构造器
+     * 通过文件获取Uri
      *
-     * @param context   上下文
-     * @param authority FileProvider授权
-     * @author binze 2020/1/14 15:36
+     * @author 狐彻 2020/09/09 17:06
      */
-    public FileUriUtil(Context context, String authority) {
-        this.mContext = context.getApplicationContext();
-        this.cAuthority = authority;
+    public Uri fileToUri(File file, String authority) {
+        return FileProvider.getUriForFile(FoxCore.getApplication(), authority, file);
     }
 
     /**
-     * 静态获取
+     * 通过文件获取FileProvider Uri
      *
-     * @author binze 2020/1/14 15:36
+     * @author 狐彻 2020/09/10 9:04
      */
-    public static FileUriUtil get(String authority) {
-        return new FileUriUtil(FoxCore.getApplication(), authority);
+    public Uri imageToContentUri(File imageFile){
+        Cursor cursor = FoxCore.getApplication().getContentResolver()
+                .query(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                        , new String[]{MediaStore.Images.Media._ID}
+                        , MediaStore.Images.Media.DATA + "=?"
+                        , new String[]{imageFile.getPath()}
+                        , null);
+
+        if (cursor != null && cursor.moveToFirst()){
+            //如果已经存在于Provider，则利用id直接生成Uri
+            int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+            Uri baseUri = Uri.parse("content://media/external/images/media");
+            cursor.close();
+            return Uri.withAppendedPath(baseUri, "" + id);
+        }
+        if (imageFile.exists()){
+            //图片文件存在
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.DATA, imageFile.getPath());
+            return FoxCore.getApplication().getContentResolver()
+                    .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        } else return null; //图片不存在
     }
 
     /**
-     * 获取文件Uri
+     * 通过Uri获取文件路径
      *
-     * @author binze 2020/1/14 15:37
+     * @author 狐彻 2020/09/09 17:08
      */
-    public Uri fileToUri(File file) {
-        return FileProvider.getUriForFile(mContext, cAuthority, file);
-    }
-
-    /**
-     * 通过Uri获取文件
-     *
-     * @author binze 2020/1/14 15:38
-     */
-    public File uriToFile(@NonNull Uri uri) {
+    public String uriToFilePath(@NonNull Uri uri){
         final String scheme = uri.getScheme();  //前缀
         String path = null;
 
@@ -79,41 +101,50 @@ public class FileUriUtil {
         }
         if (ContentResolver.SCHEME_CONTENT.equals(scheme)) { //Content前缀
             path = convertImageUri(uri);
-            if (TextUtils.isEmpty(path))
+            if (TextUtils.isEmpty(path))    //若不是图片文件
                 path = convertContentUri(uri);
         }
 
-        if (TextUtils.isEmpty(path)) return null;
-        return new File(path);
+        return path;
     }
 
     /**
-     * 打开文件
-     * @author binze 2020/1/14 16:19
+     * 选取合适应用开启文件
+     *
+     * @author 狐彻 2020/09/10 10:03
      */
-    public void openFile(@NonNull File file, @NonNull String mimeType, int permissionFlag){
-        Uri uri = fileToUri(file);
+    public void openUriFile(@NonNull Uri uri, @NonNull String mimeType){
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);  //临时权限
         intent.setDataAndType(uri, mimeType);
-        List<ResolveInfo> resInfoList = mContext.getPackageManager()
+        List<ResolveInfo> resolveInfoList = FoxCore.getApplication().getPackageManager()
                 .queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        for (ResolveInfo info : resInfoList){
+        for (ResolveInfo info : resolveInfoList){
             String packageName = info.activityInfo.packageName;
-            mContext.grantUriPermission(packageName, uri, permissionFlag);
+            FoxCore.getApplication().grantUriPermission(packageName, uri
+                    , Intent.FLAG_GRANT_READ_URI_PERMISSION
+                            | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         }
-        mContext.startActivity(intent);
+        
+        FoxCore.getApplication().startActivity(intent);
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // 私有方法
+    ///////////////////////////////////////////////////////////////////////////
 
     /**
      * 处理图片Uri
      *
+     * @return 文件路径
      * @author binze 2020/1/14 15:42
      */
     private String convertImageUri(Uri uri) {
         String path = null;
-        Cursor cursor = mContext.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null);
+        Cursor cursor = FoxCore.getApplication()
+                .getContentResolver()
+                .query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null);
         if (cursor == null) return null;
         if (cursor.moveToFirst()) {
             int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
@@ -128,11 +159,12 @@ public class FileUriUtil {
     /**
      * 处理Content Uri
      *
+     * @return 文件路径
      * @author binze 2020/1/14 16:02
      */
     private String convertContentUri(Uri uri) {
         try {
-            List<PackageInfo> packs = mContext.getPackageManager()
+            List<PackageInfo> packs = FoxCore.getApplication().getPackageManager()
                     .getInstalledPackages(PackageManager.GET_PROVIDERS);    //获取系统内所有包
             String fileProviderClassName = FileProvider.class.getName();
             for (PackageInfo pack : packs) {
@@ -148,7 +180,8 @@ public class FileUriUtil {
                         Class<FileProvider> fileProviderClass = FileProvider.class;
                         Method getPathStrategy = fileProviderClass.getDeclaredMethod("getPathStrategy", Context.class, String.class);
                         getPathStrategy.setAccessible(true);
-                        Object invoke = getPathStrategy.invoke(null, mContext, uri.getAuthority());
+                        Object invoke = getPathStrategy
+                                .invoke(null, FoxCore.getApplication(), uri.getAuthority());
                         if (invoke != null) {
                             String PathStrategyStringClass = FileProvider.class.getName() + "$PathStrategy";
                             Class<?> PathStrategy = Class.forName(PathStrategyStringClass);
@@ -165,7 +198,7 @@ public class FileUriUtil {
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, "convertContentUri: ", e);
+            LogUtil.e(TAG, "convertContentUri: ", e);
         }
         return null;
     }

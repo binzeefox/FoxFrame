@@ -1,7 +1,9 @@
 package com.binzeefox.foxframe.core.tools;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -145,6 +147,7 @@ public class RequestUtil {
      */
     public static class InnerFragment extends Fragment {
         private ObservableEmitter<Result> _emitter;  //发射器
+        private int _requestCode;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -161,6 +164,7 @@ public class RequestUtil {
          * @author 狐彻 2020/09/08 12:19
          */
         private void request(Intent intent, Bundle options, int requestCode) {
+            this._requestCode = requestCode;
             if (options == null)
                 startActivityForResult(intent, requestCode);
             else
@@ -185,7 +189,7 @@ public class RequestUtil {
         private int resultCode;  //返回码
         private int requestCode; //请求码
 
-        private Result(Intent data, int resultCode, int requestCode) {
+        protected Result(Intent data, int resultCode, int requestCode) {
             this.data = data;
             this.resultCode = resultCode;
             this.requestCode = requestCode;
