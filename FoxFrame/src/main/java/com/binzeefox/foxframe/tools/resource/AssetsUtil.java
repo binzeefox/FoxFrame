@@ -1,12 +1,8 @@
-package com.binzeefox.foxframe.tools.dev;
+package com.binzeefox.foxframe.tools.resource;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.binzeefox.foxframe.core.FoxCore;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * 操作Assets文件工具类
@@ -32,19 +28,5 @@ public class AssetsUtil {
      */
     public static AssetsUtil get(){
         return new AssetsUtil(FoxCore.getApplication());
-    }
-
-    /**
-     * 读取
-     * @author binze 2020/1/2 14:45
-     */
-    public String readTxtAssets(String fullName) throws IOException {
-        try (InputStream is = mCtx.getResources().getAssets().open(fullName)){
-            byte[] bytes = new byte[is.available()];
-            return new String(bytes);
-        } catch (IOException e){
-            Log.e(TAG, "readTxtAssets: 读取TXT文件失败", e);
-            throw e;
-        }
     }
 }

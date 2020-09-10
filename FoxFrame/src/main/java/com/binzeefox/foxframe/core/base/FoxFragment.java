@@ -3,7 +3,6 @@ package com.binzeefox.foxframe.core.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -11,22 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.binzeefox.foxframe.core.FoxCore;
-import com.binzeefox.foxframe.core.base.callbacks.PermissionCallback;
-import com.binzeefox.foxframe.core.tools.ActivityRequestUtil;
 import com.binzeefox.foxframe.core.tools.Navigator;
-import com.binzeefox.foxframe.core.tools.PermissionUtil;
 import com.binzeefox.foxframe.core.tools.RequestUtil;
 import com.binzeefox.foxframe.core.tools.ViewHelper;
-import com.binzeefox.foxframe.tools.RxUtil;
+import com.binzeefox.foxframe.tools.dev.RxUtil;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -42,7 +36,6 @@ public abstract class FoxFragment extends Fragment {
     protected io.reactivex.rxjava3.disposables.CompositeDisposable dContainer3; //RX回收器
     private View root;
 
-    private FoxCore core = FoxCore.get();   //核心
     private SparseArray<Disposable> mTimerQueue = new SparseArray<>();
     private SparseBooleanArray mFlagQueue = new SparseBooleanArray();   //二次点击标识
 
@@ -67,36 +60,6 @@ public abstract class FoxFragment extends Fragment {
      * @author binze 2019/12/10 13:18
      */
     protected abstract void create(View root, Bundle savedInstanceState);
-
-//    /**
-//     * 请求权限
-//     * @author binze 2019/12/10 12:11
-//     */
-//    protected void requestPermission(List<String> permissionList
-//            , final PermissionCallback callback){
-//        PermissionUtil.get(permissionList).request(this)
-//                .subscribe(new Observer<List<String>>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//                        dContainer.add(d);
-//                    }
-//
-//                    @Override
-//                    public void onNext(List<String> failedList) {
-//                        callback.callback(failedList);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e(TAG, "onError: 请求权限异常", e);
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//    }
 
     /**
      * 跳转

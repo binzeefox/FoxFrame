@@ -2,7 +2,7 @@ package com.binzeefox.foxframe.tools.resource;
 
 import androidx.annotation.NonNull;
 
-import com.binzeefox.foxframe.tools.dev.LogUtil;
+import com.binzeefox.foxframe.core.tools.LogUtil;
 
 import java.io.File;
 import java.io.FileReader;
@@ -32,7 +32,7 @@ public class RxIOUtil extends IOUtil{
      *
      * 可能会造成Stream的回收问题，暂不推荐使用
      */
-    public static Observable<Long> streamToStream(@NonNull final InputStream is, @NonNull final OutputStream os) {
+    public static Observable<Long> streamToStreamAsync(@NonNull final InputStream is, @NonNull final OutputStream os) {
         return Observable.create(new ObservableOnSubscribe<Long>() {
             @Override
             public void subscribe(ObservableEmitter<Long> emitter) throws Exception {
@@ -57,7 +57,7 @@ public class RxIOUtil extends IOUtil{
      * @return onNext：已完成bytes
      * @author 狐彻 2020/09/10 11:07
      */
-    public static Observable<Long> copyFile(@NonNull final File source, @NonNull final File target) throws IOException {
+    public static Observable<Long> copyFileAsync(@NonNull final File source, @NonNull final File target) throws IOException {
         if (!source.exists()) {
             LogUtil.i(TAG, "copyFile: 原始文件不存在");
             return null;

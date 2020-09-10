@@ -1,4 +1,4 @@
-package com.binzeefox.foxframe.tools;
+package com.binzeefox.foxframe.tools.dev;
 
 import android.text.TextUtils;
 import android.util.Log;

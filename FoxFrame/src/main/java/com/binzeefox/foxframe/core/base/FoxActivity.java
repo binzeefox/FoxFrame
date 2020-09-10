@@ -3,9 +3,7 @@ package com.binzeefox.foxframe.core.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -13,21 +11,16 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.binzeefox.foxframe.core.FoxCore;
-import com.binzeefox.foxframe.core.base.callbacks.PermissionCallback;
-import com.binzeefox.foxframe.core.tools.ActivityRequestUtil;
 import com.binzeefox.foxframe.core.tools.Navigator;
-import com.binzeefox.foxframe.core.tools.PermissionUtil;
 import com.binzeefox.foxframe.core.tools.RequestUtil;
 import com.binzeefox.foxframe.core.tools.ViewHelper;
-import com.binzeefox.foxframe.tools.RxUtil;
+import com.binzeefox.foxframe.tools.dev.RxUtil;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;

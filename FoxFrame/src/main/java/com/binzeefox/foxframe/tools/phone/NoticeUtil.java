@@ -1,7 +1,6 @@
 package com.binzeefox.foxframe.tools.phone;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.VibrationEffect;
@@ -12,9 +11,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.binzeefox.foxframe.core.FoxCore;
+import com.binzeefox.foxframe.tools.resource.DimenUtil;
 import com.binzeefox.foxframe.views.CustomDialogFragment;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresPermission;
 
 import java.util.Objects;
@@ -36,29 +35,17 @@ public class NoticeUtil {
     private static final String TAG = "NoticeUtil";
     private static NoticeUtil mInstance;    //单例
     private CustomDialogFragment dialogHelper;  //弹窗助手
-//    private Context mCtx;    //Application 实例
     private Toast mToast;   //Toast实例
     private FoxCore core = FoxCore.get();
 
     /**
-     * 单例模式
+     * 静态获取
      */
     public static NoticeUtil get() {
         if (mInstance != null) return mInstance;
-//        mInstance = new NoticeUtil(FoxCore.getApplication());
         mInstance = new NoticeUtil();
         return mInstance;
     }
-
-//    /**
-//     * 构造器
-//     *
-//     * @param ctx ctx
-//     */
-//    private NoticeUtil(@NonNull Context ctx) {
-//        //获取全局ApplicationContext防止内存泄漏
-//        mCtx = ctx.getApplicationContext();
-//    }
 
     /**
      * 获取上下文
@@ -110,6 +97,24 @@ public class NoticeUtil {
     }
 
     /**
+     * 加载Dialog
+     *
+     * @author 狐彻 2020/09/10 14:16
+     */
+    public CustomDialogFragment showLoadingDialog(){
+        return showLoadingDialog("请稍等", null);
+    }
+
+    /**
+     * 加载Dialog
+     *
+     * @author 狐彻 2020/09/10 14:17
+     */
+    public CustomDialogFragment showLoadingDialog(String title){
+        return showLoadingDialog(title, null);
+    }
+
+    /**
      * 显示网络加载Dialog
      */
     public CustomDialogFragment showLoadingDialog(String title, AlertDialog.OnClickListener cancelClickListener) {
@@ -135,7 +140,7 @@ public class NoticeUtil {
     }
 
     /**
-     * 显示简单的警告信息
+     * 简单的警告信息
      *
      * @author binze 2019/10/21 15:08
      * update 2019/12/17 取消自动show()
@@ -152,6 +157,15 @@ public class NoticeUtil {
         dialogHelper.negativeButton("取消", navigateListener);
 
         return dialogHelper;
+    }
+
+    /**
+     * 带进度条的加载框
+     *
+     * @author 狐彻 2020/09/10 14:21
+     */
+    public ProgressDialog progressDialog(String title, int max){
+        return new ProgressDialog(title, max);
     }
 
     /**
@@ -227,68 +241,97 @@ public class NoticeUtil {
     /**
      * 显示带进度条网络加载Dialog
      */
-    public static class ProgressDialog {
+    public class ProgressDialog {
         private static final String TAG = "ProgressDialog";
-        @SuppressLint("StaticFieldLeak")
-        static ProgressDialog sInstance;    //Application Context
         private CustomDialogFragment helper;
         private ProgressBar bar;
         private int max;
         private FoxCore core = FoxCore.get();
 
-        public static ProgressDialog getInstance(String title, int max) {
-            return new ProgressDialog(FoxCore.getApplication(), title, max);
-        }
-
-        public ProgressDialog(Context context, String title, int max) {
+        private ProgressDialog(String title, int max) {
+            int dp8 = (int) DimenUtil.get().dipToPx(8);
             this.max = max;
-            Context ctx = context.getApplicationContext();
-            helper = getHelper();
+            Context ctx = FoxCore.getApplication();
+            helper = getDialogHelper();
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams
                     (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            bar = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
-            bar.setPadding(60, 30, 60, 30);
+            bar = new ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
+            bar.setPadding(dp8 * 2, dp8, dp8 * 2, dp8);
             bar.setLayoutParams(params);
             bar.setIndeterminate(false);
             bar.setMax(max);
-//            bar.setProgress(0);
             helper
                     .title(title)
                     .cancelable(false)
                     .view(bar);
         }
 
-        public void progress(int progress) {
-            if (progress > max) progress = max;
-            bar.setProgress(progress, true);
+        /**
+         * 动画过渡到该数值
+         *
+         * @author 狐彻 2020/09/10 14:30
+         */
+        public void progress(int progress){
+            progress(progress, true);
         }
 
+        /**
+         * 设置当前进度到数值
+         *
+         * @author 狐彻 2020/09/10 14:29
+         */
+        public void progress(int progress, boolean animate) {
+            if (progress > max) progress = max;
+            bar.setProgress(progress, animate);
+        }
+
+        /**
+         * 提升数值
+         *
+         * @author 狐彻 2020/09/10 14:31
+         */
         public void increase(int count) {
             bar.incrementProgressBy(count);
         }
 
+        /**
+         * 设置当前比例
+         *
+         * @author 狐彻 2020/09/10 14:32
+         */
+        public void progressByPercent(float percent){
+            int progress = (int) (max * percent);
+            progress(progress);
+        }
+
+        /**
+         * 设置当前比例
+         *
+         * @author 狐彻 2020/09/10 14:32
+         */
+        public void progressByPercent(float percent, boolean animate){
+            int progress = (int) (max * percent);
+            progress(progress, animate);
+        }
+
+        /**
+         * 比例提升
+         *
+         * @author 狐彻 2020/09/10 14:34
+         */
+        public void increaseByPercent(float percent){
+            int progress = (int) (max * percent);
+            increase(progress);
+        }
+
+
+        /**
+         * 显示
+         *
+         * @author 狐彻 2020/09/10 14:31
+         */
         public void show() {
-            if (core != null) helper.show(core.getTopActivity().getSupportFragmentManager());
-            else
-                Log.e(TAG, "show: call FoxCore#init(Application) first!!!", new IllegalAccessException());
-        }
-
-        public void dismiss() {
-            if (helper != null && helper.getFragmentManager() != null)
-                helper.dismiss();
-            helper = null;
-        }
-
-        private CustomDialogFragment getHelper() {
-            if (helper != null && helper.getFragmentManager() != null)
-                helper.dismiss();
-            helper = null;
-
-            if (core != null)
-                helper = CustomDialogFragment.get(core.getTopActivity());
-            else
-                Log.e(TAG, "getHelper: call FoxCore#init(Application) first!!!", new IllegalAccessException());
-            return helper;
+            helper.show();
         }
     }
 }

@@ -8,6 +8,8 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
+import com.binzeefox.foxframe.core.tools.LogUtil;
+
 /**
  * 高度自适应图片视图
  * @author binze
@@ -15,6 +17,8 @@ import androidx.appcompat.widget.AppCompatImageView;
  */
 public class AutoAdjustImageView extends AppCompatImageView {
     private static final String TAG = "AutoAdjustImageView";
+
+    // 尺寸改变回调
     private OnSizeChangedListener mListener = new OnSizeChangedListener() {
         @Override
         public void onSizeChange(int width, int height) {
@@ -36,15 +40,17 @@ public class AutoAdjustImageView extends AppCompatImageView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Drawable d = getDrawable();
-        int width = MeasureSpec.getSize(widthMeasureSpec),  height = MeasureSpec.getSize(heightMeasureSpec);
-        int[] measures;
-        if (d == null) {
+
+        Drawable d = getDrawable(); //先获取到图片
+        if (d == null) {    //没有图片则结束
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
             return;
         }
 
-        Log.d(TAG, "onMeasure: " + width + " " + height);
+        //视图尺寸
+        int width = MeasureSpec.getSize(widthMeasureSpec),  height = MeasureSpec.getSize(heightMeasureSpec);
+        int[] measures;
+        LogUtil.d(TAG, "onMeasure: " + width + " " + height);
 
         //若长非确认值，则直接宽自适应
         if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST){
@@ -74,7 +80,7 @@ public class AutoAdjustImageView extends AppCompatImageView {
 
         setMeasuredDimension(width, height);
         mListener.onSizeChange(width, height);
-        Log.d(TAG, "onMeasure: end " + width + " " + height);
+        LogUtil.d(TAG, "onMeasure: end " + width + " " + height);
     }
 
     /**
@@ -112,6 +118,11 @@ public class AutoAdjustImageView extends AppCompatImageView {
         return new int[]{width, height};
     }
 
+    /**
+     * 尺寸变化回调
+     *
+     * @author 狐彻 2020/09/10 14:09
+     */
     public interface OnSizeChangedListener{
         void onSizeChange(int width, int height);
     }

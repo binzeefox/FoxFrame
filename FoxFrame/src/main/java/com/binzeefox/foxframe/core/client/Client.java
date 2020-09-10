@@ -69,13 +69,23 @@ public abstract class Client {
                     @NotNull
                     @Override
                     public Response intercept(@NotNull Chain chain) throws IOException {
-                        Request request = chain.request()
-                                .newBuilder()
-                                .addHeader("Content-Type", "application/json;charset=UTF-8")
-                                .build();
-                        return chain.proceed(request);
+                        return requestInterceptor(chain);
                     }
                 }).build();
+    }
+
+    /**
+     * OkHttpClient拦截器
+     *
+     * 默认添加 Header => Content-Type: application/json;charset=UTF-8
+     * @author 狐彻 2020/09/10 14:04
+     */
+    protected Response requestInterceptor(Interceptor.Chain chain) throws IOException{
+        Request request = chain.request()
+                .newBuilder()
+                .addHeader("Content-Type", "application/json;charset=UTF-8")
+                .build();
+        return chain.proceed(request);
     }
 
 //    *******抽象方法↓******

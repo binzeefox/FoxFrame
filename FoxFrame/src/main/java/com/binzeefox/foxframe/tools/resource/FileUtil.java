@@ -1,28 +1,16 @@
 package com.binzeefox.foxframe.tools.resource;
 
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Environment;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.binzeefox.foxframe.core.FoxCore;
-import com.binzeefox.foxframe.tools.dev.LogUtil;
+import com.binzeefox.foxframe.core.tools.LogUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * 文件工具类

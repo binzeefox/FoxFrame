@@ -3,6 +3,8 @@ apply plugin: 'com.github.dcendents.android-maven'
 group='com.github.binzeefox'
 apply plugin:'maven'
 
+def _versionName = "v0.4.1"
+
 android {
     compileSdkVersion 30
 
@@ -10,7 +12,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 30
         versionCode 4
-        versionName "v0.4.0"
+        versionName _versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -52,11 +54,11 @@ dependencies {
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
 }
 
-def jar_name = "FoxFrame.jar"
+def jar_name = "FoxFrame-${_versionName}.jar"
 
 task makeJar(type: Copy) {
     //删除存在的
-    delete 'build/libs/FoxFrame.jar'
+    delete "build/libs/${jar_name}"
     //设置拷贝的文件
     from('build/intermediates/aar_main_jar/release/')
     //打进jar包后的文件目录
@@ -66,7 +68,7 @@ task makeJar(type: Copy) {
     //（我们只关心classes.jar这个文件）
     include('classes.jar')
     //重命名
-    rename ('classes.jar', 'FoxFrame.jar')
+    rename ('classes.jar', jar_name)
 }
 
 makeJar.dependsOn(build)

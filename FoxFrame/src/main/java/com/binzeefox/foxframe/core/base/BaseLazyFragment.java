@@ -7,6 +7,7 @@ import com.binzeefox.foxframe.tools.dev.ThreadUtil;
 
 /**
  * 懒加载碎片
+ *
  * @author binze
  * 2020/1/6 9:45
  */
@@ -17,7 +18,7 @@ public abstract class BaseLazyFragment extends FoxFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (!isLoaded) {
+        if (!isLoaded) {    //未加载过，则在线程中调用onLoad()
             ThreadUtil.get().execute(new Runnable() {
                 @Override
                 public void run() {
@@ -30,18 +31,20 @@ public abstract class BaseLazyFragment extends FoxFragment {
 
     /**
      * fragment第一次加载
-     *
+     * <p>
      * 在Fragment第一次可见时调用
-     * 该方法自动运行在其它线程
+     * 该方法运行在其它线程
+     *
      * @author binze 2020/1/6 9:43
      */
     protected abstract void onLoad();
-    
+
     /**
      * 主线程运行
+     *
      * @author binze 2020/1/6 9:43
      */
-    protected void runOnUiThread(Runnable runnable){
+    protected void runOnUiThread(Runnable runnable) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(runnable);
     }

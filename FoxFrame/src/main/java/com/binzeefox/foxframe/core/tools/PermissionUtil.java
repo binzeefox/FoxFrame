@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.binzeefox.foxframe.core.FoxCore;
-import com.binzeefox.foxframe.tools.dev.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,6 @@
-package com.binzeefox.foxframe.tools;
+package com.binzeefox.foxframe.tools.dev;
+
+import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -8,7 +10,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -63,5 +67,26 @@ public class CollectionUtil {
         String json = gson.toJson(raw);
         return gson.fromJson(json, new TypeToken<List<T>>() {
         }.getType());
+    }
+
+    /**
+     * 数组转列表
+     *
+     * @author 狐彻 2020/09/10 13:45
+     */
+    public static <T> List<T> arrayToList(@NonNull T[] array){
+        return new ArrayList<>(Arrays.asList(array));
+    }
+
+    /**
+     * 列表转数组
+     *
+     * @author 狐彻 2020/09/10 13:47
+     */
+    public static <T> void listToArray(@NonNull List<T> list, @NonNull T[] ts){
+        for (int i = 0; i < list.size(); i++){
+            if (i >= ts.length) break;
+            ts[i] = list.get(i);
+        }
     }
 }

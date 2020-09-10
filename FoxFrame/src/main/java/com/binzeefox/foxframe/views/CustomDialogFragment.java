@@ -13,6 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.binzeefox.foxframe.core.FoxCore;
+import com.binzeefox.foxframe.core.tools.LogUtil;
+
 /**
  * 自定义弹窗碎片
  *
@@ -20,13 +23,13 @@ import androidx.fragment.app.FragmentManager;
  * 内部持有一个AlertDialog.Builder
  */
 public class CustomDialogFragment extends AppCompatDialogFragment {
-
+    private static final String TAG = "CustomDialogFragment";
     private static AlertDialog.Builder mBuilder;
 
     /**
      * 空构造方法
      */
-    public CustomDialogFragment() {
+    private CustomDialogFragment() {
 
     }
 
@@ -42,6 +45,15 @@ public class CustomDialogFragment extends AppCompatDialogFragment {
     }
 
 //    ****************↓公共方法
+
+    /**
+     * 静态获取
+     *
+     * @author 狐彻 2020/09/10 14:13
+     */
+    public static CustomDialogFragment get(){
+        return get(FoxCore.getApplication());
+    }
 
     /**
      * 静态获取
@@ -155,11 +167,25 @@ public class CustomDialogFragment extends AppCompatDialogFragment {
         return this;
     }
 
+    /**
+     * 显示
+     *
+     * @author 狐彻 2020/09/10 14:11
+     */
     public void show(FragmentManager manager) {
         try {
             super.show(manager, this.getClass().getSimpleName());
         }catch (IllegalStateException e){
-            Log.e("CustomDialogFragment", e.getMessage(), e);
+            LogUtil.e(TAG, "show", e);
         }
+    }
+
+    /**
+     * 显示
+     *
+     * @author 狐彻 2020/09/10 14:14
+     */
+    public void show(){
+        show(FoxCore.get().getTopActivity().getSupportFragmentManager());
     }
 }

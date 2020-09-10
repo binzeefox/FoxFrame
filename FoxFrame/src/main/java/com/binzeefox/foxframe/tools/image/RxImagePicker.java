@@ -1,42 +1,22 @@
 package com.binzeefox.foxframe.tools.image;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.text.TextUtils;
-import android.util.Log;
 
 import com.binzeefox.foxframe.core.FoxCore;
-import com.binzeefox.foxframe.core.base.FoxApplication;
-import com.binzeefox.foxframe.core.tools.ActivityRequestUtil;
 import com.binzeefox.foxframe.core.tools.RequestUtil;
-import com.binzeefox.foxframe.tools.RxUtil;
-import com.binzeefox.foxframe.tools.resource.FileUtil;
 
-import java.io.Closeable;
-import java.io.File;
-import java.io.IOException;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.ObservableTransformer;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -48,7 +28,6 @@ import static android.app.Activity.RESULT_OK;
  *
  * @author binze
  * 2019/12/11 11:35
- * @see com.binzeefox.foxframe.tools.image.ImagePicker
  * <p>
  * 2020/09/09 14:30
  * 大改 不再继承自ImagePicker

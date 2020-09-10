@@ -1,47 +1,26 @@
 package com.binzeefox.androidtemplete;
 
 import android.Manifest;
-import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.binzeefox.foxframe.core.FoxCore;
 import com.binzeefox.foxframe.core.base.FoxActivity;
-import com.binzeefox.foxframe.core.tools.PermissionUtil;
 import com.binzeefox.foxframe.core.tools.RequestUtil;
-import com.binzeefox.foxframe.tools.dev.LogUtil;
 import com.binzeefox.foxframe.tools.dev.TextTools;
-import com.binzeefox.foxframe.tools.image.ImageUtil;
-import com.binzeefox.foxframe.tools.image.RxImagePicker;
 import com.binzeefox.foxframe.tools.phone.NoticeUtil;
 import com.binzeefox.foxframe.tools.phone.PhoneStatusUtil;
-import com.binzeefox.foxframe.tools.resource.FileUtil;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.RequiresPermission;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
-
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 /**
  * 示例活动

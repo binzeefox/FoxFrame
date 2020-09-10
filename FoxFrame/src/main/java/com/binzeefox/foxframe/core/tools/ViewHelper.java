@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.binzeefox.foxframe.tools.RxUtil;
+import com.binzeefox.foxframe.tools.dev.RxUtil;
 
 import java.util.List;
 
