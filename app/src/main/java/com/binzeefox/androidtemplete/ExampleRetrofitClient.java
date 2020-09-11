@@ -1,8 +1,8 @@
 package com.binzeefox.androidtemplete;
 
-import com.binzeefox.foxframe.core.client.Client;
+import com.binzeefox.foxframe.core.client.RetrofitClient;
 
-class ExampleClient extends Client {
+class ExampleRetrofitClient extends RetrofitClient {
 
     /**
      * 设置根路径

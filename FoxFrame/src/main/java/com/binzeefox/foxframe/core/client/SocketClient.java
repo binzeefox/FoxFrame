@@ -20,6 +20,8 @@ import java.nio.charset.StandardCharsets;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresPermission;
 
+import com.binzeefox.foxframe.core.client.parts.SocketInterface;
+
 /**
  * socket连接类
  * TODO 没有测试，不知道能不能正常使用。用法参见MainActivity中的示例

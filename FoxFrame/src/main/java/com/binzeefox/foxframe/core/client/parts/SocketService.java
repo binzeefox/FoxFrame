@@ -1,4 +1,4 @@
-package com.binzeefox.foxframe.core.client;
+package com.binzeefox.foxframe.core.client.parts;
 
 import android.app.Service;
 import android.content.Intent;

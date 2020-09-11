@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @author binze
  * 2019/11/29 15:16
  */
-public abstract class Client {
+public abstract class RetrofitClient {
     private static final int DEFAULT_CONNECT_TIMEOUT = 10;
     private static final int DEFAULT_READ_TIMEOUT = 20;
     private static final int DEFAULT_WRITE_TIMEOUT = 60;
@@ -32,7 +32,7 @@ public abstract class Client {
      * 私有初始化
      * 子类请配置线程安全的构造器
      */
-    protected Client() {
+    protected RetrofitClient() {
         mRetrofit = createRetrofit();
     }
 
