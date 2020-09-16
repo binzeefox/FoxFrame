@@ -2,7 +2,7 @@ package com.binzeefox.foxframe.tools.resource;
 
 import androidx.annotation.NonNull;
 
-import com.binzeefox.foxframe.core.tools.LogUtil;
+import com.binzeefox.foxframe.tools.dev.LogUtil;
 
 import java.io.File;
 import java.io.FileReader;

@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 
 import com.binzeefox.foxframe.core.FoxCore;
-import com.binzeefox.foxframe.core.tools.LogUtil;
+import com.binzeefox.foxframe.tools.dev.LogUtil;
 
 import java.io.File;
 import java.lang.reflect.Method;

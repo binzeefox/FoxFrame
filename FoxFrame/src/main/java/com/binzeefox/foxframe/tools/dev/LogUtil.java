@@ -1,4 +1,4 @@
-package com.binzeefox.foxframe.core.tools;
+package com.binzeefox.foxframe.tools.dev;
 
 import android.util.Log;
 
@@ -13,12 +13,12 @@ import android.util.Log;
  */
 @SuppressWarnings("ALL")
 public class LogUtil {
-    private static final int CLASS_NOON = -1;   //CURRENT_CLASS为此时，不打印Log
-    private static final int CLASS_E = 0;   //CURRENT_CLASS为此时，只打印E
-    private static final int CLASS_W = 1;   //CURRENT_CLASS为此时，只打印E和W
-    private static final int CLASS_D = 2;   //CURRENT_CLASS为此时，只打印E,W和D
-    private static final int CLASS_I = 3;   //CURRENT_CLASS为此时，只打印E,W,D和I
-    private static final int CLASS_V = 4;   //CURRENT_CLASS为此时，全部打印
+    public static final int CLASS_NONE = -1;   //CURRENT_CLASS为此时，不打印Log
+    public static final int CLASS_E = 0;   //CURRENT_CLASS为此时，只打印E
+    public static final int CLASS_W = 1;   //CURRENT_CLASS为此时，只打印E和W
+    public static final int CLASS_D = 2;   //CURRENT_CLASS为此时，只打印E,W和D
+    public static final int CLASS_I = 3;   //CURRENT_CLASS为此时，只打印E,W,D和I
+    public static final int CLASS_V = 4;   //CURRENT_CLASS为此时，全部打印
 
     public static int CURRENT_CLASS = CLASS_V;   //打印指示器
 

@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.binzeefox.foxframe.core.FoxCore;
+import com.binzeefox.foxframe.tools.dev.ThreadUtil;
 import com.binzeefox.foxframe.tools.resource.DimenUtil;
 import com.binzeefox.foxframe.views.CustomDialogFragment;
 
@@ -63,11 +64,16 @@ public class NoticeUtil {
      *
      * @param resourceId 提示文字资源
      */
-    public void showToast(int resourceId) {
-        if (mToast != null)
-            mToast.cancel();
-        mToast = Toast.makeText(getContext(), resourceId, Toast.LENGTH_LONG);
-        mToast.show();
+    public void showToast(final int resourceId) {
+        ThreadUtil.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mToast != null)
+                    mToast.cancel();
+                mToast = Toast.makeText(getContext(), resourceId, Toast.LENGTH_LONG);
+                mToast.show();
+            }
+        });
     }
 
     /**
@@ -75,12 +81,17 @@ public class NoticeUtil {
      *
      * @param text 文字
      */
-    public void showToast(CharSequence text) {
-        if (TextUtils.isEmpty(text)) return;
-        if (mToast != null)
-            mToast.cancel();
-        mToast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
-        mToast.show();
+    public void showToast(final CharSequence text) {
+        ThreadUtil.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (TextUtils.isEmpty(text)) return;
+                if (mToast != null)
+                    mToast.cancel();
+                mToast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
+                mToast.show();
+            }
+        });
     }
 
     /**

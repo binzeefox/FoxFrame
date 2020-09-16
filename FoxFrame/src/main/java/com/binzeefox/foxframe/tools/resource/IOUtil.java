@@ -2,14 +2,11 @@ package com.binzeefox.foxframe.tools.resource;
 
 import android.content.ContentResolver;
 import android.net.Uri;
-import android.os.Environment;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.binzeefox.foxframe.core.FoxCore;
-import com.binzeefox.foxframe.core.tools.LogUtil;
+import com.binzeefox.foxframe.tools.dev.LogUtil;
 
 import java.io.File;
 import java.io.FileInputStream;

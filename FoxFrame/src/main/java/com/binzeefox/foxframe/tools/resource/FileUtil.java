@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.binzeefox.foxframe.core.FoxCore;
-import com.binzeefox.foxframe.core.tools.LogUtil;
+import com.binzeefox.foxframe.tools.dev.LogUtil;
 
 import java.io.File;
 import java.io.IOException;

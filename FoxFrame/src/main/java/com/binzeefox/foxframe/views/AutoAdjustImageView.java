@@ -8,7 +8,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
-import com.binzeefox.foxframe.core.tools.LogUtil;
+import com.binzeefox.foxframe.tools.dev.LogUtil;
 
 /**
  * 高度自适应图片视图
