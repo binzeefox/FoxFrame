@@ -29,6 +29,13 @@ public abstract class BaseLazyFragment extends FoxFragment {
         isLoaded = true;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //若不将其在此置false，onDestroy后可能类没有被回收，而导致再次加载时会失败
+        isLoaded = false;
+    }
+
     /**
      * fragment第一次加载
      * <p>

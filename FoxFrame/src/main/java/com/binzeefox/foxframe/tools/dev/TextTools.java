@@ -39,6 +39,8 @@ public class TextTools {
      * 判断是否纯数字
      */
     public static boolean isInteger(String str) {
+        if ("0".equals(str)) return true;
+        if ("-".equals(str)) return false;
         Pattern pattern = Pattern.compile("^[-+]?[\\d]*$");
         return pattern.matcher(str).matches();
     }
