@@ -143,7 +143,7 @@ public class NoticeUtil {
         if (cancelClickListener != null)
             dialogHelper.negativeButton("取消", cancelClickListener);
         if (core != null)
-            dialogHelper.show(core.getTopActivity().getSupportFragmentManager());
+            dialogHelper.show(core.getTopActivity().getSupportFragmentManager(), "loading_fragment_dialog");
         else
             Log.e(TAG, "getHelper: call FoxCore#init(Application) first!!!", new IllegalAccessException());
 
