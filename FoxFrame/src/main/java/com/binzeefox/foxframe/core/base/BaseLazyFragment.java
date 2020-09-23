@@ -37,6 +37,15 @@ public abstract class BaseLazyFragment extends FoxFragment {
     }
 
     /**
+     * 手动控制该Fragment是为已加载状态
+     *
+     * @author 狐彻 2020/09/18 15:00
+     */
+    public void setLoaded(boolean isLoaded) {
+        this.isLoaded = isLoaded;
+    }
+
+    /**
      * fragment第一次加载
      * <p>
      * 在Fragment第一次可见时调用

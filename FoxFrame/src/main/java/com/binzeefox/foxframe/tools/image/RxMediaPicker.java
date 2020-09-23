@@ -32,9 +32,12 @@ import static android.app.Activity.RESULT_OK;
  * 2020/09/09 14:30
  * 大改 不再继承自ImagePicker
  * {RxImagePicker.with(this).authority(authority).openCamera}
+ * <p>
+ * 2020/09/23 14:19
+ * 改名RxMediaPicker，增加获取视频相关方法，增加设置获取质量
  * 返回Observable
  */
-public class RxImagePicker {
+public class RxMediaPicker {
     private static final String TAG = "RxImagePicker";
     private final RequestUtil mUtil;    //请求工具类
 
@@ -43,7 +46,7 @@ public class RxImagePicker {
      *
      * @author 狐彻 2020/09/08 12:48
      */
-    private RxImagePicker(final FragmentManager manager) {
+    private RxMediaPicker(final FragmentManager manager) {
         mUtil = RequestUtil.with(manager);
     }
 
@@ -51,18 +54,73 @@ public class RxImagePicker {
     // 静态获取
     ///////////////////////////////////////////////////////////////////////////
 
-    public static RxImagePicker with(AppCompatActivity activity) {
-        return new RxImagePicker(activity.getSupportFragmentManager());
+    public static RxMediaPicker with(AppCompatActivity activity) {
+        return new RxMediaPicker(activity.getSupportFragmentManager());
     }
 
-    public static RxImagePicker with(Fragment fragment) {
-        return new RxImagePicker(fragment.getChildFragmentManager());
+    public static RxMediaPicker with(Fragment fragment) {
+        return new RxMediaPicker(fragment.getChildFragmentManager());
     }
 
     ///////////////////////////////////////////////////////////////////////////
     // 参数方法
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * 开启录像
+     *
+     * @author 狐彻 2020/09/23 14:14
+     */
+    @RequiresPermission(allOf = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA})
+    public Observable<Result> openVideoRecorder(int requestCode) {
+        return openVideoRecorder(requestCode, (Uri) null);
+    }
+
+    /**
+     * 开启录像
+     *
+     * @author 狐彻 2020/09/23 14:14
+     */
+    @RequiresPermission(allOf = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA})
+    public Observable<Result> openVideoRecorder(int requestCode, final Uri targetUri) {
+        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (targetUri != null)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, targetUri);
+        return mUtil.intentRequest(intent, requestCode)
+                .map(new Function<RequestUtil.Result, Result>() {
+                    @Override
+                    public Result apply(RequestUtil.Result result) throws Exception {
+                        Result r = new Result(result);
+                        if (targetUri != null) r.imageUri = targetUri;
+                        return r;
+                    }
+                });
+    }
+
+    /**
+     * 开启录像
+     *
+     * @author 狐彻 2020/09/23 14:32
+     */
+    public Observable<Result> openVideoRecorder(int requestCode, final VideoConfig config) {
+        Intent intent = config.convertIntent();
+        return mUtil.intentRequest(intent, requestCode)
+                .map(new Function<RequestUtil.Result, Result>() {
+                    @Override
+                    public Result apply(RequestUtil.Result result) throws Exception {
+                        Result r = new Result(result);
+                        if (config.targetUri != null)
+                            r.imageUri = config.targetUri;
+                        return r;
+                    }
+                });
+    }
 
     /**
      * 开启相机
@@ -130,7 +188,7 @@ public class RxImagePicker {
     /**
      * 开启剪裁
      *
-     * @param out   输出Uri
+     * @param out 输出Uri
      * @author 狐彻 2020/09/09 14:20
      */
     @RequiresPermission(allOf = {
@@ -143,7 +201,7 @@ public class RxImagePicker {
     /**
      * 开启剪裁
      *
-     * @param out   输出Uri
+     * @param out         输出Uri
      * @param interceptor 参数拦截器，若为空则设置为常规参数
      * @author 狐彻 2020/09/09 14:20
      */
@@ -204,6 +262,50 @@ public class RxImagePicker {
 
         public Uri getImageUri() {
             return imageUri;
+        }
+    }
+
+    /**
+     * 视频配置
+     *
+     * @author 狐彻 2020/09/23 14:24
+     */
+    public static class VideoConfig {
+        public static final int QUALITY_HIGH = 1;
+        public static final int QUALITY_LOW = 0;
+
+        private Uri targetUri = null;   //目标路径
+        private int quality = QUALITY_HIGH; //质量，默认高质量
+        private long duration = -1; //时长
+        private long maxBytes = -1; //最大尺寸
+
+        private Intent convertIntent() {
+            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, quality);
+
+            if (targetUri != null)
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, targetUri);
+            if (duration != -1)
+                intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, duration);
+            if (maxBytes != -1)
+                intent.putExtra(MediaStore.EXTRA_SIZE_LIMIT, maxBytes);
+            return intent;
+        }
+
+        public void setTargetUri(Uri targetUri) {
+            this.targetUri = targetUri;
+        }
+
+        public void setQuality(int quality) {
+            this.quality = quality;
+        }
+
+        public void setDuration(long duration) {
+            this.duration = duration;
+        }
+
+        public void setMaxBytes(long maxBytes) {
+            this.maxBytes = maxBytes;
         }
     }
 
