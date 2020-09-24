@@ -155,7 +155,7 @@ public class PermissionUtil {
         private void startCheck(){
             final List<String> failedList = checkPermissions();
             if (!failedList.isEmpty())
-                Log.d(TAG, "startCheck: 权限未通过 => " + failedList);
+                LogUtil.d(TAG, "startCheck: 权限未通过 => " + failedList);
             _emitter.onNext(failedList);
             _emitter.onComplete();
         }
@@ -217,7 +217,7 @@ public class PermissionUtil {
             }
 
             if (!failedList.isEmpty())
-                Log.d(TAG, "startCheckAndRequest: 权限未通过 => " + failedList);
+                LogUtil.d(TAG, "startCheckAndRequest: 权限未通过 => " + failedList);
             _emitter.onNext(failedList);
             _emitter.onComplete();
         }

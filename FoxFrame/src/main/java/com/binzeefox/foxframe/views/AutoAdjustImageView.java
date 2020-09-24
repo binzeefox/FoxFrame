@@ -59,7 +59,7 @@ public class AutoAdjustImageView extends AppCompatImageView {
             height = measures[1];
             mListener.onSizeChange(width, height);
             setMeasuredDimension(width, height);
-            Log.d(TAG, "onMeasure: end1 " + width + " " + height);
+            LogUtil.d(TAG, "onMeasure: end1 " + width + " " + height);
 
             return;
         }
@@ -71,7 +71,7 @@ public class AutoAdjustImageView extends AppCompatImageView {
         height = measures[1];
 
         //2.若长度超标，则改为长自适应
-        Log.d(TAG, "onMeasure: height heightRaw " + height + " " + MeasureSpec.getSize(heightMeasureSpec));
+        LogUtil.d(TAG, "onMeasure: height heightRaw " + height + " " + MeasureSpec.getSize(heightMeasureSpec));
         if (height > MeasureSpec.getSize(heightMeasureSpec)){
             measures = fitHeight(heightMeasureSpec);
             width = measures[0];
@@ -112,7 +112,7 @@ public class AutoAdjustImageView extends AppCompatImageView {
         Drawable d = getDrawable();
 
         height = MeasureSpec.getSize(heightMeasureSpec);
-        Log.d(TAG, "fitHeight: " + height);
+        LogUtil.d(TAG, "fitHeight: " + height);
         width = (int) Math.ceil((float) height * (float) d.getIntrinsicWidth() / (float) d.getIntrinsicHeight());
 
         return new int[]{width, height};

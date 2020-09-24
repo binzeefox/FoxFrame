@@ -2,6 +2,8 @@ package com.binzeefox.foxframe.core.tools;
 
 import android.util.Log;
 
+import com.binzeefox.foxframe.tools.dev.LogUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -29,7 +31,7 @@ public class DataHolder {
     public void submit(String key, Callback callback){
         mEntryLock.writeLock().lock();
         try {
-            if (mData.containsKey(key)) Log.w(TAG, "submit: 字段冲突，覆盖回调");
+            if (mData.containsKey(key)) LogUtil.w(TAG, "submit: 字段冲突，覆盖回调");
             mEntry.put(key, callback);
         } finally {
             mEntryLock.writeLock().unlock();
@@ -81,7 +83,7 @@ public class DataHolder {
             T value = (T) mData.get(key);
             return value == null ? defaultValue : value;
         } catch (Exception e){
-            Log.e(TAG, "read: ", e);
+            LogUtil.e(TAG, "read: ", e);
             return defaultValue;
         } finally {
             mDataLock.readLock().unlock();
@@ -97,7 +99,7 @@ public class DataHolder {
         try {
             return mData.remove(key);
         } catch (Exception e){
-            Log.e(TAG, "remove: ", e);
+            LogUtil.e(TAG, "remove: ", e);
             return null;
         } finally {
             mDataLock.writeLock().unlock();

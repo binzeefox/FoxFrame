@@ -8,11 +8,10 @@ import android.util.Log;
 
 import com.binzeefox.foxframe.core.base.FoxApplication;
 import com.binzeefox.foxframe.core.tools.DataHolder;
+import com.binzeefox.foxframe.tools.dev.LogUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +32,7 @@ public class FoxCore {
 //    private Map<String, Object> globalData = new HashMap<>(); //全局数据
     private final DataHolder globalData = new DataHolder(); //2020/06/10 11:20 修改为final类型 **可能造成主线程阻塞。使用时请注意**
 
-    private Stack<AppCompatActivity> activityStack = new Stack<>();  //返回栈
+    private final Stack<AppCompatActivity> activityStack = new Stack<>();  //返回栈
 
     /**
      * 静态初始化
@@ -97,7 +96,7 @@ public class FoxCore {
             PackageManager manager = mApp.getPackageManager();
             return manager.getPackageInfo(mApp.getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "getPackageInfo: 获取失败", e);
+            LogUtil.e(TAG, "getPackageInfo: 获取失败", e);
         }
         return null;
     }
@@ -110,7 +109,7 @@ public class FoxCore {
     public String getVersionName() {
         PackageInfo info = getPackageInfo();
         if (info == null) {
-            Log.e(TAG, "getVersionName: 获取版本名失败");
+            LogUtil.e(TAG, "getVersionName: 获取版本名失败");
             return null;
         }
         return info.versionName;
@@ -125,7 +124,7 @@ public class FoxCore {
     public long getVersionCode() {
         PackageInfo info = getPackageInfo();
         if (info == null) {
-            Log.e(TAG, "getVersionName: 获取版本号失败");
+            LogUtil.e(TAG, "getVersionName: 获取版本号失败");
             return -1;
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {

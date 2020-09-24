@@ -5,6 +5,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.binzeefox.foxframe.core.FoxCore;
+import com.binzeefox.foxframe.tools.dev.LogUtil;
 
 /**
  * 自定义Application
@@ -29,7 +30,7 @@ public class FoxApplication extends Application {
      */
     public String getAuthority(){
         if (core == null) {
-            Log.e(TAG, "getAuthority: app 尚未完成初始化" );
+            LogUtil.e(TAG, "getAuthority: app 尚未完成初始化" );
             return null;
         }
         return core.getPackageInfo().packageName + ".authority";

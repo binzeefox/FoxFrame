@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.binzeefox.foxframe.tools.dev.LogUtil;
+
 /**
  * 跳转器
  *
@@ -19,7 +21,7 @@ public class Navigator {
     public static final String PARAMS_BUNDLE = "PARAMS_BUNDLE"; //跳转参数键
 
     private Intent intent;
-    private Commitor commitor;
+    private final Commitor commitor;
 
     /**
      * 静态方法，获取跳转参数Bundle
@@ -155,7 +157,7 @@ public class Navigator {
      * @author binze 2019/12/10 13:40
      */
     private class ActivityCommitor implements Commitor {
-        Activity activity;
+        final Activity activity;
 
         ActivityCommitor(Activity activity) {
             this.activity = activity;
@@ -188,7 +190,7 @@ public class Navigator {
      * @author binze 2019/12/10 13:42
      */
     private class FragmentCommitor implements Commitor {
-        Fragment fragment;
+        final Fragment fragment;
 
         FragmentCommitor(Fragment fragment) {
             this.fragment = fragment;
@@ -208,7 +210,7 @@ public class Navigator {
         public void commitForResult(int requestCode) {
             Activity activity = fragment.getActivity();
             if (activity == null) {
-                Log.e(TAG, "commitForResult: Fragment未绑定Activity");
+                LogUtil.e(TAG, "commitForResult: Fragment未绑定Activity");
                 return;
             }
             ActivityCompat.startActivityForResult(fragment.getActivity(), intent, requestCode, null);
@@ -218,7 +220,7 @@ public class Navigator {
         public void commitForResult(int requestCode, Bundle options) {
             Activity activity = fragment.getActivity();
             if (activity == null) {
-                Log.e(TAG, "commitForResult: Fragment未绑定Activity");
+                LogUtil.e(TAG, "commitForResult: Fragment未绑定Activity");
                 return;
             }
             ActivityCompat.startActivityForResult(fragment.getActivity(), intent, requestCode, options);

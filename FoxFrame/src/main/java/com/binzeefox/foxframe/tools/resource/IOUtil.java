@@ -10,6 +10,7 @@ import com.binzeefox.foxframe.tools.dev.LogUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -121,5 +122,14 @@ public class IOUtil {
                 os.flush();
             }
         }
+    }
+
+    /**
+     * Uri写入文件
+     *
+     * @author 狐彻 2020/09/24 11:16
+     */
+    public static void writeToFile(@NonNull Uri uri, @NonNull File target) throws IOException {
+        streamToStream(UriUtil.get().getInputStream(uri), new FileOutputStream(target));
     }
 }

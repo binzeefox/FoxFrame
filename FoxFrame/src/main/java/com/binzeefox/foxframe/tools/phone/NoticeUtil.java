@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.binzeefox.foxframe.core.FoxCore;
+import com.binzeefox.foxframe.tools.dev.LogUtil;
 import com.binzeefox.foxframe.tools.dev.ThreadUtil;
 import com.binzeefox.foxframe.tools.resource.DimenUtil;
 import com.binzeefox.foxframe.views.CustomDialogFragment;
@@ -37,7 +38,7 @@ public class NoticeUtil {
     private static NoticeUtil mInstance;    //单例
     private CustomDialogFragment dialogHelper;  //弹窗助手
     private Toast mToast;   //Toast实例
-    private FoxCore core = FoxCore.get();
+    private final FoxCore core = FoxCore.get();
 
     /**
      * 静态获取
@@ -145,7 +146,7 @@ public class NoticeUtil {
         if (core != null)
             dialogHelper.show(core.getTopActivity().getSupportFragmentManager(), "loading_fragment_dialog");
         else
-            Log.e(TAG, "getHelper: call FoxCore#init(Application) first!!!", new IllegalAccessException());
+            LogUtil.e(TAG, "getHelper: call FoxCore#init(Application) first!!!", new IllegalAccessException());
 
         return dialogHelper;
     }
@@ -204,7 +205,7 @@ public class NoticeUtil {
      * @author binze 2019/12/17 10:41
      */
     public class Vibrator{
-        private android.os.Vibrator vibrator = (android.os.Vibrator) getContext().getSystemService(VIBRATOR_SERVICE);
+        private final android.os.Vibrator vibrator = (android.os.Vibrator) getContext().getSystemService(VIBRATOR_SERVICE);
         private int amplitude = DEFAULT_AMPLITUDE;  //振幅
 
         private Vibrator(){}
@@ -254,10 +255,9 @@ public class NoticeUtil {
      */
     public class ProgressDialog {
         private static final String TAG = "ProgressDialog";
-        private CustomDialogFragment helper;
-        private ProgressBar bar;
-        private int max;
-        private FoxCore core = FoxCore.get();
+        private final CustomDialogFragment helper;
+        private final ProgressBar bar;
+        private final int max;
 
         private ProgressDialog(String title, int max) {
             int dp8 = (int) DimenUtil.get().dipToPx(8);

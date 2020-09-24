@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.binzeefox.foxframe.core.FoxCore;
 import com.binzeefox.foxframe.core.tools.Navigator;
 import com.binzeefox.foxframe.core.tools.RequestUtil;
 import com.binzeefox.foxframe.core.tools.ViewHelper;
@@ -36,8 +35,8 @@ public abstract class FoxFragment extends Fragment {
     protected io.reactivex.rxjava3.disposables.CompositeDisposable dContainer3; //RX回收器
     private View root;
 
-    private SparseArray<Disposable> mTimerQueue = new SparseArray<>();
-    private SparseBooleanArray mFlagQueue = new SparseBooleanArray();   //二次点击标识
+    private final SparseArray<Disposable> mTimerQueue = new SparseArray<>();
+    private final SparseBooleanArray mFlagQueue = new SparseBooleanArray();   //二次点击标识
 
     /**
      * 通过资源ID加载布局，优先级较低

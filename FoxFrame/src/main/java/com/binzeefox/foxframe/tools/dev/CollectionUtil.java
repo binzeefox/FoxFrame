@@ -12,7 +12,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -41,7 +40,7 @@ public class CollectionUtil {
             return dest;
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<E>();
+            return new ArrayList<>();
         }
     }
 

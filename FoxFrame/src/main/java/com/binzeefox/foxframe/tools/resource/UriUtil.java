@@ -21,6 +21,9 @@ import com.binzeefox.foxframe.core.FoxCore;
 import com.binzeefox.foxframe.tools.dev.LogUtil;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -44,6 +47,40 @@ public class UriUtil {
     ///////////////////////////////////////////////////////////////////////////
     // 方法
     ///////////////////////////////////////////////////////////////////////////
+
+    /**
+     * 通过Uri获取OutputStream
+     *
+     * @author 狐彻 2020/09/24 11:11
+     */
+    public OutputStream getOutputStream(Uri uri) throws FileNotFoundException {
+        ContentResolver resolver = FoxCore.getApplication().getContentResolver();
+        return resolver.openOutputStream(uri);
+    }
+
+    /**
+     * 通过Uri获取InputStream
+     *
+     * @author 狐彻 2020/09/24 11:12
+     */
+    public InputStream getInputStream(Uri uri) throws FileNotFoundException {
+        ContentResolver resolver = FoxCore.getApplication().getContentResolver();
+        return resolver.openInputStream(uri);
+    }
+
+
+    /**
+     * 根据Uri获取文件类型
+     *
+     * @author 狐彻 2020/09/24 10:34
+     */
+    public String getUriMimeType(Uri uri){
+        LogUtil.v(TAG, "getUriMimeType: uri = " + uri);
+        String type = FoxCore.getApplication()
+                .getContentResolver().getType(uri);
+        LogUtil.v(TAG, "getUriMimeType: type = " + type);
+        return type;
+    }
 
     /**
      * 通过文件获取Uri
@@ -170,7 +207,7 @@ public class UriUtil {
             for (PackageInfo pack : packs) {
                 ProviderInfo[] providers = pack.providers;  //获取所有Provider
                 if (providers == null) {
-                    Log.e(TAG, "convertContentUri: no provider find");
+                    LogUtil.e(TAG, "convertContentUri: no provider find");
                     continue;
                 }
                 for (ProviderInfo provider : providers) {

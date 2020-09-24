@@ -199,7 +199,7 @@ public class BitmapUtil {
             _result = BitmapFactory.decodeStream(bais, null, options);
             return _result;
         } catch (OutOfMemoryError e){
-            Log.e(TAG, "compress: 生成压缩图失败", e);;
+            LogUtil.e(TAG, "compress: 生成压缩图失败", e);
             _result = null;
             System.gc();
             return null;

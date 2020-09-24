@@ -3,6 +3,8 @@ package com.binzeefox.foxframe.tools.resource;
 import android.graphics.Color;
 import android.util.Log;
 
+import com.binzeefox.foxframe.tools.dev.LogUtil;
+
 import java.util.Arrays;
 
 /**
@@ -35,7 +37,7 @@ public class ColorUtil {
         int green = (color & 0x00ff00) >> 8;
         int blue = (color & 0x0000ff);
 
-        Log.d(TAG, "getColorRgb: rgb = " + Arrays.toString(new int[]{red, green, blue}));
+        LogUtil.d(TAG, "getColorRgb: rgb = " + Arrays.toString(new int[]{red, green, blue}));
         return new int[]{red, green, blue};
     }
 }

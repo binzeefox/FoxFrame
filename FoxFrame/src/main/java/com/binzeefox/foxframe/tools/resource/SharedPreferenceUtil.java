@@ -19,7 +19,7 @@ public class SharedPreferenceUtil {
 
     @SuppressLint("StaticFieldLeak")
     private static SharedPreferenceUtil sInstance;
-    private Context mContext;   //Application context
+    private final Context mContext;   //Application context
 
     public static SharedPreferenceUtil get(){
         if (sInstance == null) {

@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.binzeefox.foxframe.tools.dev.LogUtil;
 import com.binzeefox.foxframe.tools.dev.RxUtil;
 
 import java.util.List;
@@ -78,7 +79,7 @@ public abstract class ViewHelper {
     public void setErrorById(int id, CharSequence error) {
         View view = findView(id);
         if (!(view instanceof EditText)){
-            Log.w(TAG, "setErrorById: 目标View非EditText子类");
+            LogUtil.w(TAG, "setErrorById: 目标View非EditText子类");
             return;
         }
         ((EditText) view).setError(error);
@@ -91,7 +92,7 @@ public abstract class ViewHelper {
     public void setTextById(int id, CharSequence text) {
         View view = findView(id);
         if (!(view instanceof TextView)){
-            Log.w(TAG, "setErrorById: 目标View非TextView子类");
+            LogUtil.w(TAG, "setErrorById: 目标View非TextView子类");
             return;
         }
         ((TextView) view).setText(text);
@@ -104,7 +105,7 @@ public abstract class ViewHelper {
     public void clearViewById(int id) {
         View view = findView(id);
         if (!(view instanceof EditText)){
-            Log.w(TAG, "setErrorById: 目标View非TextView子类");
+            LogUtil.w(TAG, "setErrorById: 目标View非TextView子类");
             return;
         }
         ((EditText) view).setError(null);

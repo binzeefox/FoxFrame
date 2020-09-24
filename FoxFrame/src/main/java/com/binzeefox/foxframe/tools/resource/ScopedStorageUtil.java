@@ -44,7 +44,7 @@ public class ScopedStorageUtil {
 
 
     private static ScopedStorageUtil sInstance;
-    private ContentResolver mResolver;  //
+    private final ContentResolver mResolver;  //
 
     /**
      * 私有化构造器
@@ -141,8 +141,8 @@ public class ScopedStorageUtil {
      * @author 狐彻 2020/09/08 13:48
      */
     public class Writer {
-        private ContentValues values;
-        private Uri uri;
+        private final ContentValues values;
+        private final Uri uri;
 
         private Writer(Uri tableUri) {
             values = new ContentValues();
@@ -215,8 +215,8 @@ public class ScopedStorageUtil {
      * @author 狐彻 2020/09/08 14:11
      */
     public class Reader {
-        private String colID = "_id";
-        private Uri uri;
+        private final String colID = "_id";
+        private final Uri uri;
 
         private Reader(Uri tableUri) {
             uri = tableUri;
@@ -293,8 +293,8 @@ public class ScopedStorageUtil {
      * @author 狐彻 2020/09/08 14:41
      */
     public static class InsertResult {
-        private boolean success;
-        private Uri uri;
+        private final boolean success;
+        private final Uri uri;
 
         public InsertResult(boolean success, Uri uri) {
             this.success = success;

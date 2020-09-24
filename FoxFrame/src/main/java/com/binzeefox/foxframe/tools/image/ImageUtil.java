@@ -36,7 +36,7 @@ import androidx.annotation.NonNull;
 @TargetApi(Build.VERSION_CODES.P)
 public class ImageUtil {
     private static final String TAG = "ImageUtil";
-    private Context mCtx;   //上下文实例
+    private final Context mCtx;   //上下文实例
 
     public ImageUtil(@NonNull Context context) {
         mCtx = context.getApplicationContext();
@@ -85,9 +85,9 @@ public class ImageUtil {
      * @author binze 2019/12/27 16:16
      */
     public static class Decoder {
-        private ImageDecoder.Source source;
+        private final ImageDecoder.Source source;
         //监听器数组
-        private List<ImageDecoder.OnHeaderDecodedListener> decodeListenerList = new ArrayList<>();
+        private final List<ImageDecoder.OnHeaderDecodedListener> decodeListenerList = new ArrayList<>();
         //不完全解码监听器。若触发并返回true，则展示不完整的图片，缺损区域将会是空白
         private ImageDecoder.OnPartialImageListener partialImageListener = null;
         //图片预处理
@@ -96,7 +96,7 @@ public class ImageUtil {
         private int sampleSizeIndex = -1;   //清晰度监听器角标
 
         //真正的头加载监听器，在里面遍历调用定义的方法
-        private ImageDecoder.OnHeaderDecodedListener mListener =
+        private final ImageDecoder.OnHeaderDecodedListener mListener =
                 new ImageDecoder.OnHeaderDecodedListener() {
                     @Override
                     public void onHeaderDecoded(@NonNull ImageDecoder decoder

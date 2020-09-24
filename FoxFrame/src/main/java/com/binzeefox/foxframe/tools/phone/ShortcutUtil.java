@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.binzeefox.foxframe.core.FoxCore;
+import com.binzeefox.foxframe.tools.dev.LogUtil;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class ShortcutUtil {
     private static final String TAG = "ShortcutUtil";
     public static final String PARAMS_EXTRA = "params_extra";
 
-    private ShortcutManager mManager;   //服务器
+    private final ShortcutManager mManager;   //服务器
 
     /**
      * 静态获取
@@ -89,7 +90,7 @@ public class ShortcutUtil {
     public boolean addDynamicShortcuts(List<ShortcutInfo> infoList) {
         if (getDynamicShortcuts().size() + infoList.size() > mManager.getMaxShortcutCountPerActivity()) {
             //快捷方式容量满了
-            Log.e(TAG, "setDynamicShortcut: 无法添加快捷方式，已达上限");
+            LogUtil.e(TAG, "setDynamicShortcut: 无法添加快捷方式，已达上限");
             return false;
         }
         mManager.addDynamicShortcuts(infoList);
@@ -104,7 +105,7 @@ public class ShortcutUtil {
     public boolean setDynamicShortcuts(List<ShortcutInfo> infoList) {
         if (getDynamicShortcuts().size() + infoList.size() > mManager.getMaxShortcutCountPerActivity()) {
             //快捷方式容量满了
-            Log.e(TAG, "setDynamicShortcut: 无法添加快捷方式，已达上限");
+            LogUtil.e(TAG, "setDynamicShortcut: 无法添加快捷方式，已达上限");
             return false;
         }
         mManager.setDynamicShortcuts(infoList);

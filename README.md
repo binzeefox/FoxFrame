@@ -146,7 +146,7 @@ private void navigateExample(){
         requestPermission(Collections.singletonList(Manifest.permission.ACCESS_FINE_LOCATION)
                 , failedList -> {
                     //若全部成功，则返回空列表，否则返回失败的权限
-                    Log.d(TAG, "onNext: " + failedList.toString());
+                    LogUtil.d(TAG, "onNext: " + failedList.toString());
                 });
     }
 ```

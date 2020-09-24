@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="8dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Light">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:background="@drawable/btn_transparent_ripple"
+            android:id="@+id/item_fragment_gallery_view"
+            android:layout_centerInParent="true"
+            android:layout_width="@dimen/gallery_card_size"
+            android:layout_height="@dimen/gallery_card_size"
+            android:contentDescription="@string/gallery_video" />
+
+        <View
+            android:layout_centerInParent="true"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
+            android:background="@drawable/ic_baseline_play_arrow_colored_opacity_66"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/item_fragment_gallery_extra"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <FrameLayout
+        android:id="@+id/press_archer"
+        android:background="@drawable/btn_transparent_ripple"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</androidx.cardview.widget.CardView>

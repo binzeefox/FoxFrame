@@ -38,7 +38,7 @@ public abstract class FoxActivity extends AppCompatActivity {
     protected CompositeDisposable dContainer;   //RX回收器
     protected io.reactivex.rxjava3.disposables.CompositeDisposable dContainer3;   //RX回收器
 
-    private FoxCore core = FoxCore.get();   //获取核心
+    private final FoxCore core = FoxCore.get();   //获取核心
 
     private final SparseArray<Disposable> mTimerQueue = new SparseArray<>();
     private final SparseBooleanArray mFlagQueue = new SparseBooleanArray();   //二次点击标识
@@ -89,7 +89,7 @@ public abstract class FoxActivity extends AppCompatActivity {
 //
 //                    @Override
 //                    public void onError(Throwable e) {
-//                        Log.e(TAG, "onError: 请求权限异常", e);
+//                        LogUtil.e(TAG, "onError: 请求权限异常", e);
 //                    }
 //
 //                    @Override

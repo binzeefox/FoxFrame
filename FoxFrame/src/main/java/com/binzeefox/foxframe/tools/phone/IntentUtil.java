@@ -117,7 +117,7 @@ public class IntentUtil {
      * @author binze 2019/12/26 16:12
      */
     public final class SendHelper {
-        private Intent info = new Intent();
+        private final Intent info = new Intent();
 
         private SendHelper() {
             info.setAction(Intent.ACTION_SEND);

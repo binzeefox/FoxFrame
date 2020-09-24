@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresPermission;
 
 import com.binzeefox.foxframe.core.client.parts.SocketInterface;
+import com.binzeefox.foxframe.tools.dev.LogUtil;
 
 /**
  * socket连接类
@@ -31,10 +32,10 @@ import com.binzeefox.foxframe.core.client.parts.SocketInterface;
 public class SocketClient implements SocketInterface {
     private static final String TAG = "SocketClient";
     private OnReceiveListener onReceiveListener = null; //监听器
-    private SocketBuilder mSocketBuilder;    //用于构造Socket的接口
+    private final SocketBuilder mSocketBuilder;    //用于构造Socket的接口
 
-    private SocketHandler mHandler;   //工作线程
-    private Handler mUiHandler; //主线程
+    private final SocketHandler mHandler;   //工作线程
+    private final Handler mUiHandler; //主线程
 
     /**
      * 实现的工作Handler
@@ -79,22 +80,27 @@ public class SocketClient implements SocketInterface {
                                 (socket.getOutputStream(), StandardCharsets.UTF_8)), true);
                         BufferedReader reader = new BufferedReader(new InputStreamReader
                                 (socket.getInputStream(), StandardCharsets.UTF_8));
-                        Log.d(TAG, "run: 已连接");
+                        LogUtil.d(TAG, "run: 已连接");
                         while (true) {
                             final String receiveMsg;
                             //姑且用的是readLine
-                            if ((receiveMsg = reader.readLine()) != null) {
-                                mUiHandler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (onReceiveListener != null)
-                                            onReceiveListener.onReceive(receiveMsg);
-                                    }
-                                });
+                            try {
+                                if ((receiveMsg = reader.readLine()) != null) {
+                                    mUiHandler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (onReceiveListener != null)
+                                                onReceiveListener.onReceive(receiveMsg);
+                                        }
+                                    });
+                                }
+                            } catch (IOException e){
+                                LogUtil.e(TAG, "run: 连接失败", e);
+                                break;
                             }
                         }
                     } catch (IOException e){
-                        Log.e(TAG, "run: 连接失败", e);
+                        LogUtil.e(TAG, "run: 连接失败", e);
                         e.printStackTrace();
                     }
                 }
@@ -252,7 +258,7 @@ public class SocketClient implements SocketInterface {
         if (mHandler.writer != null) {
             mHandler.send(message);
         } else {
-            Log.e(TAG, "send: 尚未连接");
+            LogUtil.e(TAG, "send: 尚未连接");
         }
     }
 

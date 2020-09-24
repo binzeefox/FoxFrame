@@ -245,7 +245,8 @@ public class Downloader {
      * @author binze 2019/11/28 10:01
      */
     public static class Params {
-        public Uri downloadUri, fileUri;
+        public final Uri downloadUri;
+        public Uri fileUri;
         public boolean wifiOnly = true, showNotification = false, showNotificationComplete = false;
         public String title, description, externalFileName;
 
@@ -266,7 +267,7 @@ public class Downloader {
      * @author binze 2019/11/28 10:47
      */
     public static class Query {
-        private long id;
+        private final long id;
         private int status = -1;    //下载状态
         private int totalBytes = 0;
         private int currentBytes = 0;

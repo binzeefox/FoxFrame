@@ -23,6 +23,8 @@ import java.util.TimerTask;
 
 import androidx.annotation.Nullable;
 
+import com.binzeefox.foxframe.tools.dev.LogUtil;
+
 /**
  * 一个关于socket的服务
  * 尝试用来快速解决socket连接问题，经测试貌似发送和心跳包是没问题了
@@ -43,12 +45,12 @@ public class SocketService extends Service {
     private Thread connectThread;
     private Timer timer = new Timer();
     private OutputStream outS;
-    private SocketBinder binder = new SocketBinder();
+    private final SocketBinder binder = new SocketBinder();
     private String ip;
     private String port;
     private TimerTask task;
     private boolean isReconnect = true; //重连
-    private Handler mainHandler = new Handler(Looper.getMainLooper());  //UI线程
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());  //UI线程
 
     private SocketListener listener = null;
 
@@ -79,16 +81,16 @@ public class SocketService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "onCreate: ");
+        LogUtil.d(TAG, "onCreate: ");
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Log.d(TAG, "onBind: ");
+        LogUtil.d(TAG, "onBind: ");
         ip = intent.getStringExtra(INTENT_IP);
         port = intent.getStringExtra(INTENT_PORT);
-        Log.d(TAG, "onBind: ip = " + ip + "; port = " + port);
+        LogUtil.d(TAG, "onBind: ip = " + ip + "; port = " + port);
 
         initSocket();
         return binder;
@@ -96,10 +98,10 @@ public class SocketService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "onStartCommand: ");
+        LogUtil.d(TAG, "onStartCommand: ");
         ip = intent.getStringExtra(INTENT_IP);
         port = intent.getStringExtra(INTENT_PORT);
-        Log.d(TAG, "onStartCommand: ip = " + ip + "; port = " + port);
+        LogUtil.d(TAG, "onStartCommand: ip = " + ip + "; port = " + port);
 
         initSocket();
 
@@ -112,7 +114,7 @@ public class SocketService extends Service {
      * @author binze 2020/5/14 14:16
      */
     private void initSocket() {
-        Log.d(TAG, "initSocket: ");
+        LogUtil.d(TAG, "initSocket: ");
         if (socket != null) return;
         connectThread = new Thread(new Runnable() {
             @Override
@@ -132,7 +134,7 @@ public class SocketService extends Service {
                     listen();   //监听
 //                    sendBeatData();
                 } catch (IOException e) {
-                    Log.e(TAG, "run: 生成socket失败", e);
+                    LogUtil.e(TAG, "run: 生成socket失败", e);
                 }
             }
         });
@@ -166,7 +168,7 @@ public class SocketService extends Service {
                         outS.write(data.getBytes(StandardCharsets.UTF_8));
                         outS.flush();
                     } catch (Exception e) {
-                        Log.e(TAG, "run: 心跳包发送失败", e);
+                        LogUtil.e(TAG, "run: 心跳包发送失败", e);
                         showToast("连接断开，正在重连");
                         releaseSocket();
                     }
@@ -196,7 +198,7 @@ public class SocketService extends Service {
                     outS.write(msg.getBytes(StandardCharsets.UTF_8));
                     outS.flush();
                 } catch (IOException e) {
-                    Log.e(TAG, "run: ", e);
+                    LogUtil.e(TAG, "run: ", e);
                 }
             }
         }).start();
@@ -214,7 +216,7 @@ public class SocketService extends Service {
 //                    (socket.getInputStream(), StandardCharsets.UTF_8));
 //            while (true) {
 //                if ((receiveMsg = in.readLine()) != null) {
-//                    Log.d(TAG, "startReceiving: " + receiveMsg);
+//                    LogUtil.d(TAG, "startReceiving: " + receiveMsg);
 //                    new Handler(Looper.getMainLooper()).post(new Runnable() {
 //                        @Override
 //                        public void run() {
@@ -225,9 +227,9 @@ public class SocketService extends Service {
 //                }
 //            }
 //        } catch (Exception e) {
-//            Log.e(TAG, "run: 客户端线程异常", e);
+//            LogUtil.e(TAG, "run: 客户端线程异常", e);
 //        }
-        Log.d(TAG, "listen: ");
+        LogUtil.d(TAG, "listen: ");
         if (listenerThread == null) {
             listenerThread = new ListenerThread();
             listenerThread.start();
@@ -262,14 +264,14 @@ public class SocketService extends Service {
             //重连
             if (isReconnect) initSocket();
         } catch (Exception e) {
-            Log.e(TAG, "releaseSocket: 回收出错", e);
+            LogUtil.e(TAG, "releaseSocket: 回收出错", e);
         }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "onDestroy: destroy");
+        LogUtil.i(TAG, "onDestroy: destroy");
         isReconnect = false;
         releaseSocket();
     }
@@ -316,7 +318,7 @@ public class SocketService extends Service {
         @Override
         public void run() {
             while (!socket.isClosed()) {
-                Log.d(TAG, "run: reading");
+                LogUtil.d(TAG, "run: reading");
                 try (DataInputStream in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
                      ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
                     if (socket == null) continue;
@@ -333,7 +335,7 @@ public class SocketService extends Service {
                         }
                     });
                 } catch (IOException e) {
-                    Log.e(TAG, "run: ", e);
+                    LogUtil.e(TAG, "run: ", e);
                 }
             }
         }

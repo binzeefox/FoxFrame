@@ -33,7 +33,7 @@ public class ClassUtil {
             Method method = o.getClass().getMethod(getter);
             return method.invoke(o);
         } catch (Exception e) {
-            Log.w(TAG, "getFieldValueByName: ", e);
+            LogUtil.w(TAG, "getFieldValueByName: ", e);
             return null;
         }
     }
@@ -51,7 +51,7 @@ public class ClassUtil {
     public static void setFieldValueByName(String fieldName, Object target, Object value) {
         if (value == null) return;
         try {
-            Class cls = target.getClass();
+            Class<?> cls = target.getClass();
             String firstLetter = fieldName.substring(0, 1).toUpperCase();
             String getter = "set" + firstLetter + fieldName.substring(1);
             Method method = null;
@@ -79,7 +79,7 @@ public class ClassUtil {
                     break;
             }
         } catch (IllegalAccessException | InvocationTargetException e) {
-            Log.e(TAG, "getFieldValueByName: ", e);
+            LogUtil.e(TAG, "getFieldValueByName: ", e);
             e.printStackTrace();
         }
     }

@@ -37,7 +37,7 @@ public class PhoneStatusUtil {
     public static final int NETWORK_DATA = 1;
     public static final int NETWORK_WIFI = 2;
 
-    private Context mCtx;
+    private final Context mCtx;
 
     /**
      * 静态获取
@@ -125,7 +125,7 @@ public class PhoneStatusUtil {
                 mCtx.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (manager != null) {
             manager.registerDefaultNetworkCallback(callback);
-        } else Log.e(TAG, "registerNetworkListener: 注册网络状态失败，没有网络连接" );
+        } else LogUtil.e(TAG, "registerNetworkListener: 注册网络状态失败，没有网络连接" );
     }
 
     /**
@@ -138,7 +138,7 @@ public class PhoneStatusUtil {
                 mCtx.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (manager != null) {
             manager.unregisterNetworkCallback(callback);
-        } else Log.e(TAG, "unregisterNetworkListener: 注册网络状态失败，没有网络连接" );
+        } else LogUtil.e(TAG, "unregisterNetworkListener: 注册网络状态失败，没有网络连接" );
     }
 
     /**

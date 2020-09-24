@@ -10,7 +10,7 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 public abstract class BasePresenter<T extends IBaseView> implements IBasePresenter {
     protected T view;   //V层
-    protected CompositeDisposable dContainer;   //V层提供的Rx回收器
+    protected final CompositeDisposable dContainer;   //V层提供的Rx回收器
 
     /**
      * 初始化

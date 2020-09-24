@@ -1,6 +1,5 @@
 package com.binzeefox.foxframe.tools.image;
 
-import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,7 +9,6 @@ import com.binzeefox.foxframe.core.FoxCore;
 import com.binzeefox.foxframe.core.tools.RequestUtil;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -71,10 +69,10 @@ public class RxMediaPicker {
      *
      * @author 狐彻 2020/09/23 14:14
      */
-    @RequiresPermission(allOf = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA})
+//    @RequiresPermission(allOf = {
+//            Manifest.permission.READ_EXTERNAL_STORAGE,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            Manifest.permission.CAMERA})
     public Observable<Result> openVideoRecorder(int requestCode) {
         return openVideoRecorder(requestCode, (Uri) null);
     }
@@ -84,10 +82,10 @@ public class RxMediaPicker {
      *
      * @author 狐彻 2020/09/23 14:14
      */
-    @RequiresPermission(allOf = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA})
+//    @RequiresPermission(allOf = {
+//            Manifest.permission.READ_EXTERNAL_STORAGE,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            Manifest.permission.CAMERA})
     public Observable<Result> openVideoRecorder(int requestCode, final Uri targetUri) {
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         if (targetUri != null)
@@ -97,7 +95,7 @@ public class RxMediaPicker {
                     @Override
                     public Result apply(RequestUtil.Result result) throws Exception {
                         Result r = new Result(result);
-                        if (targetUri != null) r.imageUri = targetUri;
+                        if (targetUri != null) r.mediaUri = targetUri;
                         return r;
                     }
                 });
@@ -116,7 +114,7 @@ public class RxMediaPicker {
                     public Result apply(RequestUtil.Result result) throws Exception {
                         Result r = new Result(result);
                         if (config.targetUri != null)
-                            r.imageUri = config.targetUri;
+                            r.mediaUri = config.targetUri;
                         return r;
                     }
                 });
@@ -127,10 +125,10 @@ public class RxMediaPicker {
      *
      * @author 狐彻 2020/09/08 13:15
      */
-    @RequiresPermission(allOf = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA})
+//    @RequiresPermission(allOf = {
+//            Manifest.permission.READ_EXTERNAL_STORAGE,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            Manifest.permission.CAMERA})
     public Observable<Result> openCamera(int requestCode) {
         return openCamera(requestCode, null);
     }
@@ -141,10 +139,10 @@ public class RxMediaPicker {
      * @param targetUri 目标Uri，若非空则返回值中data为空
      * @author 狐彻 2020/09/08 13:15
      */
-    @RequiresPermission(allOf = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA})
+//    @RequiresPermission(allOf = {
+//            Manifest.permission.READ_EXTERNAL_STORAGE,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            Manifest.permission.CAMERA})
     public Observable<Result> openCamera(int requestCode, @Nullable final Uri targetUri) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (targetUri != null)
@@ -154,7 +152,7 @@ public class RxMediaPicker {
                     @Override
                     public Result apply(RequestUtil.Result result) throws Exception {
                         Result r = new Result(result);
-                        if (targetUri != null) r.imageUri = targetUri;
+                        if (targetUri != null) r.mediaUri = targetUri;
                         return r;
                     }
                 });
@@ -165,9 +163,9 @@ public class RxMediaPicker {
      *
      * @author 狐彻 2020/09/08 13:20
      */
-    @RequiresPermission(allOf = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE})
+//    @RequiresPermission(allOf = {
+//            Manifest.permission.READ_EXTERNAL_STORAGE,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public Observable<Result> openGallery(int requestCode) {
         Intent intent = new Intent
                 (Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -178,7 +176,7 @@ public class RxMediaPicker {
                         public Result apply(RequestUtil.Result result) throws Exception {
                             Result r = new Result(result);
                             if (result.getResultCode() == RESULT_OK)
-                                r.imageUri = result.getData().getData();
+                                r.mediaUri = result.getData().getData();
                             return r;
                         }
                     });
@@ -191,9 +189,9 @@ public class RxMediaPicker {
      * @param out 输出Uri
      * @author 狐彻 2020/09/09 14:20
      */
-    @RequiresPermission(allOf = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE})
+//    @RequiresPermission(allOf = {
+//            Manifest.permission.READ_EXTERNAL_STORAGE,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public Observable<Result> openCrop(Uri in, @Nullable Uri out, int requestCode) {
         return openCrop(in, out, requestCode, null);
     }
@@ -205,9 +203,9 @@ public class RxMediaPicker {
      * @param interceptor 参数拦截器，若为空则设置为常规参数
      * @author 狐彻 2020/09/09 14:20
      */
-    @RequiresPermission(allOf = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE})
+//    @RequiresPermission(allOf = {
+//            Manifest.permission.READ_EXTERNAL_STORAGE,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public Observable<Result> openCrop(Uri in, @Nullable final Uri out, int requestCode, @Nullable CropOptionInterceptor interceptor) {
         if (in == null)
             throw new RuntimeException(TAG + " openCrop: 开启剪裁失败，原文件为空");
@@ -233,7 +231,7 @@ public class RxMediaPicker {
                     @Override
                     public Result apply(RequestUtil.Result result) throws Exception {
                         Result r = new Result(result);
-                        if (out != null) r.imageUri = out;
+                        if (out != null) r.mediaUri = out;
                         return r;
                     }
                 });
@@ -250,7 +248,7 @@ public class RxMediaPicker {
      * @author 狐彻 2020/09/08 12:44
      */
     public static class Result extends RequestUtil.Result {
-        private Uri imageUri;
+        private Uri mediaUri;
 
         protected Result(Intent data, int resultCode, int requestCode) {
             super(data, resultCode, requestCode);
@@ -260,8 +258,8 @@ public class RxMediaPicker {
             super(result.getData(), result.getResultCode(), result.getRequestCode());
         }
 
-        public Uri getImageUri() {
-            return imageUri;
+        public Uri getMediaUri() {
+            return mediaUri;
         }
     }
 
