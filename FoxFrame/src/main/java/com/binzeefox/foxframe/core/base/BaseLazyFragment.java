@@ -19,12 +19,13 @@ public abstract class BaseLazyFragment extends FoxFragment {
     public void onResume() {
         super.onResume();
         if (!isLoaded) {    //未加载过，则在线程中调用onLoad()
-            ThreadUtil.get().execute(new Runnable() {
-                @Override
-                public void run() {
-                    onLoad();
-                }
-            });
+//            ThreadUtil.get().execute(new Runnable() {
+//                @Override
+//                public void run() {
+//                    onLoad();
+//                }
+//            });
+            onLoad();
         }
         isLoaded = true;
     }

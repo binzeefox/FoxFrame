@@ -53,6 +53,7 @@ public class Navigator {
      */
     public Navigator(Activity activity, Intent intent) {
         this.commitor = new ActivityCommitor(activity);
+        this.intent = intent;
     }
 
     /**

@@ -51,7 +51,7 @@ public class GalleryFragment extends BaseLazyFragment {
     public static final String PARAMS_MEDIA_LIST = "params_media_list";
     public static final String PARAMS_SHOW_VIDEO = "params_show_video";
     public static final String PARAMS_SHOW_ADD = "params_show_add";
-    public static final String PARAMS_SHOW_KNOWN = "params_show_known";
+    public static final String PARAMS_SHOW_UNKNOWN = "params_show_known";
 
     private static final int TYPE_ADD = 0;
     private static final int TYPE_IMAGE = 1;
@@ -74,7 +74,7 @@ public class GalleryFragment extends BaseLazyFragment {
         args.putParcelableArrayList(PARAMS_MEDIA_LIST, mediaList);
         args.putBoolean(PARAMS_SHOW_VIDEO, showVideo);
         args.putBoolean(PARAMS_SHOW_ADD, showAdd);
-        args.putBoolean(PARAMS_SHOW_KNOWN, showUnknown);
+        args.putBoolean(PARAMS_SHOW_UNKNOWN, showUnknown);
         GalleryFragment fragment = new GalleryFragment();
         fragment.setArguments(args);
         return fragment;
@@ -95,7 +95,7 @@ public class GalleryFragment extends BaseLazyFragment {
         List<Uri> uriList = getArguments().getParcelableArrayList(PARAMS_MEDIA_LIST);
         mShowVideo = getArguments().getBoolean(PARAMS_SHOW_VIDEO);
         mShowAdd = getArguments().getBoolean(PARAMS_SHOW_ADD);
-        mShowUnknown = getArguments().getBoolean(PARAMS_SHOW_KNOWN);
+        mShowUnknown = getArguments().getBoolean(PARAMS_SHOW_UNKNOWN);
         if (uriList != null) mMediaList.addAll(uriList);
         mInnerListView.setItemAnimator(new DefaultItemAnimator());
 
@@ -306,7 +306,7 @@ public class GalleryFragment extends BaseLazyFragment {
             @Override
             public View createUnknownItem(@NonNull ViewGroup parent) {
                 return LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.item_gallery_fragment_known, parent, false);
+                        .inflate(R.layout.item_gallery_fragment_unknown, parent, false);
             }
 
             @Override
@@ -356,7 +356,7 @@ public class GalleryFragment extends BaseLazyFragment {
                             Drawable d = ImageUtil.get().decode(uri).decodeDrawable();
                             setImageMainThread(d, view);
                         } catch (IOException e) {
-                            LogUtil.e(TAG, "run: 加载图片失败", e);
+                            LogUtil.e(TAG, "run: 加载视频失败", e);
                             setImageMainThread(null, view);
                         }
                     }
